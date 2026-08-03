@@ -1,7 +1,8 @@
 # AOP Walking Skeleton
 
-A minimal end-to-end slice: React client → Express API → MySQL, proving the
-whole stack is wired up before real features get built.
+Manufacturing Intelligence Systems — minimal end-to-end slice: React client
+→ Express API → MySQL, proving the whole stack is wired up before real
+features get built.
 
 ## Structure
 
