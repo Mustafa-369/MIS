@@ -44,13 +44,13 @@ test('A6: no orphaned foreign keys', async () => {
     WHERE d.id IS NULL
   `)
   const positionOrphans = await scalar(`
-    SELECT COUNT(*) FROM position p
+    SELECT COUNT(*) FROM job_position p
     LEFT JOIN department d ON d.id = p.department_id
     WHERE d.id IS NULL
   `)
   const positionRolePositionOrphans = await scalar(`
     SELECT COUNT(*) FROM position_role pr
-    LEFT JOIN position p ON p.id = pr.position_id
+    LEFT JOIN job_position p ON p.id = pr.position_id
     WHERE p.id IS NULL
   `)
   const positionRoleRoleOrphans = await scalar(`
@@ -59,7 +59,7 @@ test('A6: no orphaned foreign keys', async () => {
     WHERE r.id IS NULL
   `)
   assert.equal(Number(costCenterOrphans), 0, 'cost_center.department_id orphans')
-  assert.equal(Number(positionOrphans), 0, 'position.department_id orphans')
+  assert.equal(Number(positionOrphans), 0, 'job_position.department_id orphans')
   assert.equal(Number(positionRolePositionOrphans), 0, 'position_role.position_id orphans')
   assert.equal(Number(positionRoleRoleOrphans), 0, 'position_role.role_id orphans')
 })
@@ -76,7 +76,7 @@ test('A7: no self-referencing or dangling location parents', async () => {
 })
 
 test('A8: no duplicate codes', async () => {
-  const tables = ['role', 'location', 'department', 'position', 'cost_center', 'work_center']
+  const tables = ['role', 'location', 'department', 'job_position', 'cost_center', 'work_center']
   for (const t of tables) {
     const dupes = await scalar(`
       SELECT COUNT(*) FROM (
@@ -92,7 +92,7 @@ test('A9: no null created_at', async () => {
     'role',
     'location',
     'department',
-    'position',
+    'job_position',
     'position_role',
     'cost_center',
     'work_center',

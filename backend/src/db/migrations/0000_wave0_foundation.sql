@@ -49,7 +49,7 @@ BEGIN
   END IF;
 END;
 
--- ================= department (head_position_id FK added after position) =================
+-- ================= department (head_position_id FK added after job_position) =================
 CREATE TABLE department (
   id                BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   code              VARCHAR(20)  NOT NULL,
@@ -63,8 +63,8 @@ CREATE TABLE department (
   UNIQUE KEY uq_department_code (code)
 ) ENGINE=InnoDB;
 
--- ================= position (FK -> department) =================
-CREATE TABLE position (
+-- ================= job_position (FK -> department) =================
+CREATE TABLE job_position (
   id               BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
   code             VARCHAR(30)  NOT NULL,
   title            VARCHAR(100) NOT NULL,
@@ -79,9 +79,9 @@ CREATE TABLE position (
   CONSTRAINT fk_position_department FOREIGN KEY (department_id) REFERENCES department(id)
 ) ENGINE=InnoDB;
 
--- close the department <-> position loop
+-- close the department <-> job_position loop
 ALTER TABLE department
-  ADD CONSTRAINT fk_department_head FOREIGN KEY (head_position_id) REFERENCES position(id);
+  ADD CONSTRAINT fk_department_head FOREIGN KEY (head_position_id) REFERENCES job_position(id);
 
 -- ================= position_role (POSITION DRIVES ROLES — WD-03) =================
 CREATE TABLE position_role (
@@ -90,7 +90,7 @@ CREATE TABLE position_role (
   created_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_by   BIGINT UNSIGNED NULL,
   PRIMARY KEY (position_id, role_id),
-  CONSTRAINT fk_posrole_position FOREIGN KEY (position_id) REFERENCES position(id),
+  CONSTRAINT fk_posrole_position FOREIGN KEY (position_id) REFERENCES job_position(id),
   CONSTRAINT fk_posrole_role     FOREIGN KEY (role_id)     REFERENCES role(id)
 ) ENGINE=InnoDB;
 

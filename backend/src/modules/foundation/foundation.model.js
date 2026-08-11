@@ -4,7 +4,7 @@ const TABLES = {
   role: 'role',
   location: 'location',
   department: 'department',
-  position: 'position',
+  position: 'job_position',
   costCenter: 'cost_center',
   workCenter: 'work_center',
 }
