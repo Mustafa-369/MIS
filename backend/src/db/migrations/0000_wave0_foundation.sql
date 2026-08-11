@@ -25,9 +25,29 @@ CREATE TABLE location (
   updated_at   TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   updated_by   BIGINT UNSIGNED NULL,
   UNIQUE KEY uq_location_code (code),
-  CONSTRAINT fk_location_parent  FOREIGN KEY (parent_id) REFERENCES location(id),
-  CONSTRAINT chk_location_parent_self CHECK (parent_id IS NULL OR parent_id <> id)
+  CONSTRAINT fk_location_parent  FOREIGN KEY (parent_id) REFERENCES location(id)
 ) ENGINE=InnoDB;
+
+-- MySQL 8 does not allow a CHECK constraint to reference an auto-increment
+-- column, so "a location can't be its own parent" is enforced by trigger
+-- instead of a CHECK constraint.
+CREATE TRIGGER trg_location_no_self_parent_ins
+BEFORE INSERT ON location
+FOR EACH ROW
+BEGIN
+  IF NEW.parent_id = NEW.id THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'location cannot be its own parent';
+  END IF;
+END;
+
+CREATE TRIGGER trg_location_no_self_parent_upd
+BEFORE UPDATE ON location
+FOR EACH ROW
+BEGIN
+  IF NEW.parent_id = NEW.id THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'location cannot be its own parent';
+  END IF;
+END;
 
 -- ================= department (head_position_id FK added after position) =================
 CREATE TABLE department (

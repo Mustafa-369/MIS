@@ -103,6 +103,25 @@ test('A9: no null created_at', async () => {
   }
 })
 
+test('A10: self-parent locations are blocked by trigger', async () => {
+  await assert.rejects(
+    pool.query(
+      "INSERT INTO location (id, code, name, kind, parent_id) VALUES (999999999, 'TEST_SELF_INS', 'Self-parent insert test', 'site', 999999999)",
+    ),
+    /own parent/i,
+    'BEFORE INSERT trigger did not block a self-parent row',
+  )
+
+  const [[existing]] = await pool.query(
+    "SELECT id FROM location WHERE kind='site' AND parent_id IS NULL LIMIT 1",
+  )
+  await assert.rejects(
+    pool.query('UPDATE location SET parent_id = ? WHERE id = ?', [existing.id, existing.id]),
+    /own parent/i,
+    'BEFORE UPDATE trigger did not block a self-parent row',
+  )
+})
+
 after(async () => {
   await pool.end()
 })
