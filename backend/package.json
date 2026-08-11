@@ -1,0 +1,20 @@
+{
+  "name": "aop-backend",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node --env-file=.env src/server.js",
+    "migrate": "node src/db/migrate.js",
+    "seed": "node src/db/seed.js",
+    "audit": "node --test tests/runAudit/wave0.audit.test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.11.0"
+  }
+}
