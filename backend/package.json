@@ -11,7 +11,7 @@
     "start": "node --env-file=.env src/server.js",
     "migrate": "node src/db/migrate.js",
     "seed": "node src/db/seed.js",
-    "audit": "node --test tests/runAudit/"
+    "audit": "node --test tests/runAudit/*.test.js"
   },
   "dependencies": {
     "express": "^4.19.2",
