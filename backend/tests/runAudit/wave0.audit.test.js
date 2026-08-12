@@ -27,10 +27,8 @@ test('A3: work centre metric mapping', async () => {
   }
 })
 
-test('A4: exactly seven roles', async () => {
-  const n = await scalar('SELECT COUNT(*) FROM role')
-  assert.equal(Number(n), 7)
-})
+// A4 (role count) removed in Wave 1: it duplicated A11, which is now the single
+// role-count check (9 = 7 Wave 0 + engineer + store) in wave1.audit.test.js.
 
 test('A5: exactly twenty departments (17 Wave 0 + HOSE, SALES, ACCT in Wave 1)', async () => {
   const n = await scalar('SELECT COUNT(*) FROM department')
