@@ -2,12 +2,16 @@ import express from 'express'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { foundationRouter } from './modules/foundation/foundation.routes.js'
+import { workforceRouter } from './modules/workforce/workforce.routes.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export const app = express()
 
+app.use(express.json())
+
 app.use('/api/foundation', foundationRouter)
+app.use('/api/workforce', workforceRouter)
 
 const frontendDist = path.join(__dirname, '..', '..', 'frontend', 'dist')
 app.use(express.static(frontendDist))

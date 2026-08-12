@@ -32,9 +32,9 @@ test('A4: exactly seven roles', async () => {
   assert.equal(Number(n), 7)
 })
 
-test('A5: exactly seventeen departments', async () => {
+test('A5: exactly twenty departments (17 Wave 0 + HOSE, SALES, ACCT in Wave 1)', async () => {
   const n = await scalar('SELECT COUNT(*) FROM department')
-  assert.equal(Number(n), 17)
+  assert.equal(Number(n), 20)
 })
 
 test('A6: no orphaned foreign keys', async () => {
