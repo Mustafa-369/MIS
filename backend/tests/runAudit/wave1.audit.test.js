@@ -78,13 +78,16 @@ test('A18: exactly two machines excluded from OEE (AQ21, AQ22)', async () => {
   assert.deepEqual(rows.map((r) => r.code), ['AQ21', 'AQ22'])
 })
 
-test('A19: employee, app_user, employee_position tables exist and are empty', async () => {
-  const employees = await scalar('SELECT COUNT(*) FROM employee')
-  const appUsers = await scalar('SELECT COUNT(*) FROM app_user')
-  const employeePositions = await scalar('SELECT COUNT(*) FROM employee_position')
-  assert.equal(Number(employees), 0, 'employee table should be empty in Wave 1')
-  assert.equal(Number(appUsers), 0, 'app_user table should be empty in Wave 1')
-  assert.equal(Number(employeePositions), 0, 'employee_position table should be empty in Wave 1')
+// Relaxed in Wave 1.5: these tables asserted empty through Wave 1, but the
+// bootstrap-admin script now puts the first real rows in them. Emptiness is
+// no longer an invariant, so this only asserts the tables exist — otherwise
+// the first re-deploy after bootstrap would falsely fail (same kind of
+// stale-assertion fix as A4/A5).
+test('A19: employee, app_user, employee_position tables exist', async () => {
+  const [employeeTables] = await pool.query(
+    "SELECT COUNT(*) AS n FROM information_schema.tables WHERE table_schema = DATABASE() AND table_name IN ('employee', 'app_user', 'employee_position')",
+  )
+  assert.equal(Number(employeeTables[0].n), 3, 'expected employee, app_user, employee_position to all exist')
 })
 
 test('A20: self-reference guard: no job_position.reports_to = id', async () => {

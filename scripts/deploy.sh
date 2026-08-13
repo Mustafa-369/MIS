@@ -36,6 +36,14 @@ else
   echo "==> backend/.env already exists, reusing it"
 fi
 
+# Generate JWT_SECRET if it isn't already in backend/.env (idempotent — never
+# overwrite an existing secret, same pattern used for DB_PASSWORD above).
+if ! grep -q '^JWT_SECRET=' "$ENV_FILE"; then
+  echo "==> No JWT_SECRET found, generating one"
+  JWT_SECRET="$(openssl rand -base64 48 | tr -dc 'A-Za-z0-9' | head -c 48)"
+  echo "JWT_SECRET=${JWT_SECRET}" >> "$ENV_FILE"
+fi
+
 set -a
 # shellcheck disable=SC1090
 source "$ENV_FILE"
