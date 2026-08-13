@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Organisation & Authority Structure — Aaliqadr</title>
+<style>
+:root{
+  --ink:#1f2430; --ink-soft:#4a5163; --line:#e2e5ec; --bg:#fbfaf7; --card:#ffffff;
+  --navy:#1f3864; --navy-soft:#2f4a7a;
+  --cnc:#2563eb; --cnc-bg:#e8f0fe;
+  --turn:#b45309; --turn-bg:#fdf1e3;
+  --hose:#0d9488; --hose-bg:#e2f4f1;
+  --pharma:#7c3aed; --pharma-bg:#efe8fb;
+  --ex:#15803d; --ex-bg:#eef7ee;
+  --warn:#b91c1c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;font-size:16px}
+.wrap{max-width:900px;margin:0 auto;padding:0 22px 120px}
+header.cover{background:linear-gradient(160deg,#1f3864,#3a5a92);color:#fff;
+  margin:0 -22px 40px;padding:56px 40px 44px;border-radius:0 0 24px 24px}
+.wrapouter{max-width:900px;margin:0 auto}
+header.cover h1{font-size:44px;margin:0 0 6px;letter-spacing:-.5px;font-weight:800}
+header.cover .sub{font-size:18px;opacity:.9;margin:0 0 22px}
+header.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+header.cover .chip{background:rgba(255,255,255,.14);padding:5px 12px;border-radius:999px;font-size:13px}
+h2{font-size:27px;margin:56px 0 6px;color:var(--navy);letter-spacing:-.3px;font-weight:800;
+  border-bottom:2px solid var(--line);padding-bottom:8px}
+h3{font-size:20px;margin:30px 0 6px;color:var(--ink);font-weight:700}
+p{margin:10px 0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:18px 0}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:600;margin:2px 4px 2px 0;white-space:nowrap}
+.t-cnc{background:var(--cnc-bg);color:var(--cnc)} .t-turn{background:var(--turn-bg);color:var(--turn)}
+.t-hose{background:var(--hose-bg);color:var(--hose)} .t-pharma{background:var(--pharma-bg);color:var(--pharma)}
+.t-all{background:#eef1f6;color:#334155}
+.neuron{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0;
+  box-shadow:0 1px 2px rgba(20,30,60,.04)}
+.neuron .nid{display:inline-block;background:var(--navy);color:#fff;font-weight:800;font-size:13px;
+  padding:3px 10px;border-radius:8px;margin-right:10px;letter-spacing:.4px}
+.neuron h3{display:inline;margin:0}
+.neuron .body{margin-top:12px}
+.ex{background:var(--ex-bg);border-left:4px solid var(--ex);border-radius:0 10px 10px 0;
+  padding:12px 16px;margin:14px 0;font-size:15px}
+.ex b{color:var(--ex)}
+.applies{margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.applies .lbl{font-weight:700;color:var(--ink);margin-right:6px}
+table.matrix{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.matrix th,table.matrix td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+table.matrix thead th{background:var(--navy);color:#fff;font-weight:700}
+table.matrix tbody th,table.matrix th[scope=row]{background:#f4f6fa;font-weight:700;color:var(--navy)}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:22px 0;overflow-x:auto}
+.diagram .cap{font-size:13px;color:var(--ink-soft);margin:0 0 10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.callout{background:#fff8ec;border:1px solid #f0dcae;border-radius:12px;padding:16px 20px;margin:20px 0}
+.callout h3{margin-top:0;color:var(--turn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:12px 0;padding:4px 18px}
+details summary{cursor:pointer;font-weight:700;color:var(--navy);padding:12px 0;font-size:16px}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details .reg{font-size:14.5px}
+.reg code{background:#eef1f6;padding:1px 6px;border-radius:5px;font-size:13px;color:#1e3a68;font-weight:600}
+.reg li{margin:5px 0}
+.mini{font-size:13px;color:var(--ink-soft)}
+.svgbox svg{max-width:100%;height:auto;display:block;margin:auto}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 22px;margin:6px 0 10px;columns:2;column-gap:26px}
+.toc a{color:var(--navy-soft);text-decoration:none;font-size:14.5px;display:block;padding:3px 0}
+.toc a:hover{text-decoration:underline}
+.rule{height:1px;background:var(--line);margin:40px 0}
+:root{
+  --c-teal:#0d9488; --c-teal-bg:#e2f4f1;
+  --c-purple:#7c3aed; --c-purple-bg:#efe8fb;
+  --c-amber:#b45309; --c-amber-bg:#fdf1e3;
+  --c-gray:#475569; --c-gray-bg:#eef1f6;
+  --c-coral:#e11d48; --c-coral-bg:#fde7ec;
+}
+.th{font-weight:700;font-size:13px} .ts{font-size:11.5px;fill:var(--ink-soft)}
+.c-teal rect{fill:var(--c-teal-bg);stroke:var(--c-teal)} .c-teal text{fill:#0b6b62}
+.c-purple rect{fill:var(--c-purple-bg);stroke:var(--c-purple)} .c-purple text{fill:#5b23b0}
+.c-amber rect{fill:var(--c-amber-bg);stroke:var(--c-amber)} .c-amber text{fill:#8a3f06}
+.c-gray rect{fill:var(--c-gray-bg);stroke:var(--c-gray)} .c-gray text{fill:#334155}
+.c-coral rect{fill:var(--c-coral-bg);stroke:var(--c-coral)} .c-coral text{fill:#a3123b}
+.arr{stroke:#94a3b8;stroke-width:1.6;fill:none}
+.vflow{margin:4px 0}
+.vn{background:#fff;border:1px solid var(--line);border-left:4px solid #94a3b8;border-radius:10px;padding:9px 14px;margin:0 auto 8px;max-width:600px}
+.vn b{font-size:14.5px}
+.vn .vs{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.vn.dec{border-style:dashed;border-left-color:var(--navy);background:#f7f9fc;text-align:center}
+.varrow{text-align:center;color:#aeb4c2;font-size:17px;line-height:1;margin:-2px 0 5px}
+.vbranch{display:flex;gap:8px;flex-wrap:wrap;max-width:600px;margin:0 auto 8px}
+.vopt{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12.5px}
+.vopt .cond{display:block;font-weight:700;color:var(--navy);font-size:11px;margin-bottom:2px;text-transform:uppercase;letter-spacing:.3px}
+.b-cnc{border-left-color:var(--cnc)} .b-hose{border-left-color:var(--hose)} .b-turn{border-left-color:var(--turn)} .b-pharma{border-left-color:var(--pharma)} .b-gate{border-left-color:#e11d48} .b-cost{border-left-color:var(--turn)} .b-gray{border-left-color:#94a3b8}
+@media(max-width:640px){.toc{columns:1}header.cover h1{font-size:34px}}
+
+.rolechip{display:inline-block;background:#eef1f6;color:#334155;border-radius:6px;padding:1px 8px;margin:1px 2px;font-size:12px;font-weight:600}
+.r-admin{background:#efe8fb;color:#5b23b0}.r-eng{background:#e8f0fe;color:#1d4ed8}.r-store{background:#fdf1e3;color:#8a3f06}.r-q{background:#fde7ec;color:#a3123b}.r-sales{background:#e2f4f1;color:#0b6b62}
+.flag{background:#fff4f4;border:1px solid #f3c9c9;border-left:4px solid #b91c1c;border-radius:0 12px 12px 0;padding:14px 18px;margin:18px 0}
+.flag h3{margin-top:0;color:#b91c1c}
+</style>
+</head>
+<body>
+<div class="wrapouter">
+<header class="cover">
+  <h1>Organisation &amp; Authority</h1>
+  <p class="sub">The people structure of the Aaliqadr Operations Platform</p>
+  <div class="meta">
+    <span class="chip">v1.0 · aligned to BRAIN v1.1</span>
+    <span class="chip">Companion to THE BRAIN</span>
+    <span class="chip">Jeedimetla · Ranigunj</span>
+    <span class="chip">Position drives roles</span>
+  </div>
+</header>
+</div>
+
+<main class="wrap">
+<p class="lead">This document defines the seats of the organisation — who reports to whom, and what each seat is allowed to do. It names <b>positions, not people</b>: individuals are placed into these seats in the software, and one person may hold several. Built on the BRAIN's rule that a <b>position drives its permissions</b>, it is the source for Wave&nbsp;1.</p>
+
+<h2 id="chart">1 · The organisation chart</h2>
+<div class="diagram svgbox">
+<p class="cap">Reporting structure (seats)</p>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+<g class="c-purple"><rect x="250" y="8" width="200" height="42" rx="9" stroke-width="1"/><text class="th" x="350" y="27" text-anchor="middle" fill="#5b23b0">Board / Directors</text><text class="ts" x="350" y="42" text-anchor="middle">strategy · governance · admin</text></g>
+<line x1="350" y1="50" x2="350" y2="74" class="arr"/>
+<g class="c-gray"><rect x="258" y="74" width="184" height="46" rx="9" stroke-width="1"/><text class="th" x="350" y="93" text-anchor="middle">General Manager — Operations</text><text class="ts" x="350" y="109" text-anchor="middle">holds IT · Procurement · Order Release</text></g>
+<line x1="450" y1="29" x2="512" y2="29" class="arr" stroke-dasharray="3 3"/>
+<g fill="#f7f9fc" stroke="#5b6f9c"><rect x="514" y="12" width="172" height="34" rx="8" stroke-dasharray="3 3"/></g>
+<text class="th" x="600" y="33" text-anchor="middle" fill="#334155">Finance &amp; Accounts</text>
+<text class="ts" x="600" y="60" text-anchor="middle" fill="#4a5163">independent of operations</text>
+<line x1="350" y1="120" x2="350" y2="134" class="arr"/>
+<line x1="60" y1="134" x2="640" y2="134" class="arr"/>
+<line x1="60" y1="134" x2="60" y2="152" class="arr"/><line x1="176" y1="134" x2="176" y2="152" class="arr"/><line x1="292" y1="134" x2="292" y2="152" class="arr"/><line x1="408" y1="134" x2="408" y2="152" class="arr"/><line x1="524" y1="134" x2="524" y2="152" class="arr"/><line x1="640" y1="134" x2="640" y2="152" class="arr"/>
+<g class="c-cnc"><rect x="6" y="152" width="108" height="46" rx="8" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/><text class="th" x="60" y="170" text-anchor="middle" fill="#1d4ed8" font-size="11.5">Production &amp; Planning</text><text class="ts" x="60" y="186" text-anchor="middle">JDML</text></g>
+<g class="c-coral"><rect x="122" y="152" width="108" height="46" rx="8" stroke-width="1"/><text class="th" x="176" y="170" text-anchor="middle" fill="#a3123b" font-size="11.5">Quality &amp; Eng.</text><text class="ts" x="176" y="186" text-anchor="middle">independent</text></g>
+<g class="c-teal"><rect x="238" y="152" width="108" height="46" rx="8" stroke-width="1"/><text class="th" x="292" y="170" text-anchor="middle" fill="#0b6b62" font-size="11.5">Hose Asm — JDML</text><text class="ts" x="292" y="186" text-anchor="middle">Unit 2 · weld/flare</text></g>
+<g class="c-teal"><rect x="354" y="152" width="108" height="46" rx="8" stroke-width="1"/><text class="th" x="408" y="170" text-anchor="middle" fill="#0b6b62" font-size="11.5">Hose Asm — RNGJ</text><text class="ts" x="408" y="186" text-anchor="middle">Unit 1 · crimp</text></g>
+<g class="c-gray"><rect x="470" y="152" width="108" height="46" rx="8" stroke-width="1"/><text class="th" x="524" y="170" text-anchor="middle" font-size="11.5">Sales — B2B</text><text class="ts" x="524" y="186" text-anchor="middle">Ranigunj</text></g>
+<g class="c-amber"><rect x="586" y="152" width="108" height="46" rx="8" stroke-width="1"/><text class="th" x="640" y="170" text-anchor="middle" fill="#8a3f06" font-size="11.5">Inventory Head</text><text class="ts" x="640" y="186" text-anchor="middle">Stores · JDML</text></g>
+<text x="6" y="224" class="ts" fill="#4a5163">Teams (operators, assemblers, store &amp; counter staff) sit under the relevant head and are added in the software.</text>
+<text x="6" y="244" class="ts" fill="#4a5163">Order-release: primary = General Manager, backup = Head of Production &amp; Planning. Quality escalates to the Board.</text>
+<text x="6" y="264" class="ts" fill="#4a5163">An employee may hold several seats — their roles combine. Several top seats are held together today.</text>
+</svg>
+</div>
+
+<h2 id="links">2 · What links to what</h2>
+<div class="diagram svgbox">
+<p class="cap">The links</p>
+<svg viewBox="0 0 700 178" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="al" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5"/></marker></defs>
+<g class="c-gray"><rect x="16" y="30" width="150" height="52" rx="9" stroke-width="1"/><text class="th" x="91" y="61" text-anchor="middle">Department</text></g>
+<text x="205" y="46" class="ts" text-anchor="middle">has many</text><line x1="166" y1="56" x2="244" y2="56" class="arr" marker-end="url(#al)"/>
+<g class="c-purple"><rect x="246" y="30" width="160" height="52" rx="9" stroke-width="1"/><text class="th" x="326" y="61" text-anchor="middle" fill="#5b23b0">Position (seat)</text></g>
+<text x="452" y="46" class="ts" text-anchor="middle">held by (many-to-many)</text><line x1="406" y1="56" x2="494" y2="56" class="arr" marker-end="url(#al)"/>
+<g class="c-teal"><rect x="496" y="30" width="180" height="52" rx="9" stroke-width="1"/><text class="th" x="586" y="61" text-anchor="middle" fill="#0b6b62">Employee</text></g>
+<line x1="326" y1="82" x2="326" y2="112" class="arr" marker-end="url(#al)"/><text x="360" y="102" class="ts">drives (many-to-many)</text>
+<g class="c-amber"><rect x="246" y="114" width="160" height="44" rx="9" stroke-width="1"/><text class="th" x="326" y="141" text-anchor="middle" fill="#8a3f06">Roles (permissions)</text></g>
+<text x="500" y="120" class="ts" fill="#4a5163">A Position also reports to another</text><text x="500" y="136" class="ts" fill="#4a5163">Position (the reporting line).</text><text x="500" y="152" class="ts" fill="#4a5163">Each department has one head.</text>
+</svg>
+</div>
+<div class="reg"><ul>
+<li>A <b>department</b> contains many <b>positions</b>; one is its <b>head</b>.</li>
+<li>A <b>position</b> is held by employees; an employee may hold several (<b>many-to-many</b>).</li>
+<li>A <b>position drives roles</b> (also many-to-many) — a person's access is the <b>combined roles of every seat they hold</b>.</li>
+<li>A <b>position reports to</b> another position — the chain the approval engine reads.</li>
+</ul></div>
+
+<h2 id="departments">3 · Departments</h2>
+<table class="matrix">
+<thead><tr><th>Department</th><th>Site(s)</th><th>Head seat</th></tr></thead>
+<tbody>
+<tr><td>Board / Corporate</td><td>All</td><td>Board / Directors</td></tr>
+<tr><td>Production &amp; Planning — CNC Fittings</td><td>Jeedimetla</td><td>Head of Production &amp; Planning</td></tr>
+<tr><td>Quality</td><td>Jeedimetla</td><td>Head of Quality &amp; Engineering</td></tr>
+<tr><td>Engineering (Design &amp; Development)</td><td>Jeedimetla</td><td>Head of Quality &amp; Engineering</td></tr>
+<tr><td>Hose Assembly</td><td>Jeedimetla + Ranigunj</td><td>Head of Hose Assembly (per unit)</td></tr>
+<tr><td>Stores / Warehouse</td><td>Both</td><td>Inventory Head — Jeedimetla</td></tr>
+<tr><td>Tool Room</td><td>Jeedimetla</td><td>Head of Production &amp; Planning</td></tr>
+<tr><td>Sales</td><td>Ranigunj</td><td>Head of Sales — B2B</td></tr>
+<tr><td>Procurement / Supply Chain</td><td>All</td><td>General Manager</td></tr>
+<tr><td>Accounts &amp; Finance</td><td>Ranigunj</td><td>Finance &amp; Accounts</td></tr>
+</tbody>
+</table>
+<p class="mini">Dormant (unstaffed) departments kept for growth: Security, Process Engineering, Maintenance, R&amp;D, Documentation, Master Data, Workflow, Cross-functional.</p>
+
+<h2 id="positions">4 · Positions, reporting &amp; authority</h2>
+<p>"Lvl" is the authority level (higher = more), used by the approval engine. The roles column is the WD-03 rule — the seat grants these permissions.</p>
+<table class="matrix">
+<thead><tr><th>Position (seat)</th><th>Department</th><th>Reports to</th><th>Lvl</th><th>Roles it drives</th></tr></thead>
+<tbody>
+<tr><td>Board / Directors</td><td>Corporate</td><td>— (owners)</td><td>100</td><td><span class="rolechip r-admin">admin</span></td></tr>
+<tr><td>General Manager — Operations</td><td>Corporate</td><td>Board</td><td>90</td><td><span class="rolechip r-admin">admin</span><span class="rolechip">procurement</span></td></tr>
+<tr><td>System Administrator (IT)</td><td>Corporate</td><td>Board</td><td>85</td><td><span class="rolechip r-admin">admin</span></td></tr>
+<tr><td>Head of Production &amp; Planning</td><td>Production</td><td>General Manager</td><td>60</td><td><span class="rolechip">planner</span><span class="rolechip">operator</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Head of Quality &amp; Engineering</td><td>Quality / Engineering</td><td>General Manager</td><td>60</td><td><span class="rolechip r-q">quality</span><span class="rolechip r-eng">engineer</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Head of Hose Assembly — Jeedimetla (Unit 2)</td><td>Hose Assembly</td><td>General Manager</td><td>60</td><td><span class="rolechip">planner</span><span class="rolechip">operator</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Head of Hose Assembly — Ranigunj (Unit 1)</td><td>Hose Assembly</td><td>General Manager</td><td>60</td><td><span class="rolechip">planner</span><span class="rolechip">operator</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Head of Sales — B2B</td><td>Sales</td><td>General Manager</td><td>60</td><td><span class="rolechip r-sales">sales</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Inventory Head — Jeedimetla</td><td>Stores</td><td>General Manager</td><td>55</td><td><span class="rolechip r-store">store</span><span class="rolechip">procurement</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>Finance &amp; Accounts</td><td>Accounts</td><td>Board</td><td>50</td><td><span class="rolechip">viewer</span></td></tr>
+<tr><td>Tool Room In-charge</td><td>Tool Room</td><td>Head of Production &amp; Planning</td><td>45</td><td><span class="rolechip r-store">store</span><span class="rolechip">procurement</span><span class="rolechip">operator</span><span class="rolechip">viewer</span></td></tr>
+<tr><td>CNC Programmers</td><td>Production</td><td>Head of Production &amp; Planning</td><td>40</td><td><span class="rolechip r-eng">engineer</span><span class="rolechip">operator</span></td></tr>
+<tr><td>Counter Sales + Retail Store (RNGJ)</td><td>Sales / Stores</td><td>Head of Sales — B2B</td><td>30</td><td><span class="rolechip r-sales">sales</span><span class="rolechip r-store">store</span></td></tr>
+<tr><td>Hose End-Fittings Store (RNGJ)</td><td>Stores</td><td>Head of Hose Assembly — Ranigunj</td><td>30</td><td><span class="rolechip r-store">store</span><span class="rolechip">operator</span></td></tr>
+<tr><td>CNC Operators</td><td>Production</td><td>Head of Production &amp; Planning</td><td>20</td><td><span class="rolechip">operator</span></td></tr>
+<tr><td>Cutting Machine Operators</td><td>Production</td><td>Head of Production &amp; Planning</td><td>20</td><td><span class="rolechip">operator</span></td></tr>
+<tr><td>Traub Machine Operators</td><td>Production</td><td>Head of Production &amp; Planning</td><td>20</td><td><span class="rolechip">operator</span></td></tr>
+<tr><td>Welders (weld / flare)</td><td>Hose Assembly</td><td>Head of Hose Assembly — Jeedimetla</td><td>20</td><td><span class="rolechip">operator</span></td></tr>
+<tr><td>Crimp Assemblers</td><td>Hose Assembly</td><td>Head of Hose Assembly — Ranigunj</td><td>20</td><td><span class="rolechip">operator</span></td></tr>
+<tr><td>Store Team members</td><td>Stores</td><td>Inventory Head — Jeedimetla</td><td>20</td><td><span class="rolechip r-store">store</span><span class="rolechip">operator</span></td></tr>
+</tbody>
+</table>
+
+<h2 id="roles">5 · What each role means</h2>
+<table class="matrix">
+<thead><tr><th>Role</th><th>Grants</th></tr></thead>
+<tbody>
+<tr><td><span class="rolechip r-admin">admin</span></td><td>Full access to everything.</td></tr>
+<tr><td><span class="rolechip r-sales">sales</span></td><td>Book and manage customer orders.</td></tr>
+<tr><td><span class="rolechip">planner</span></td><td>Plan and schedule production (PPC); manage ETDs.</td></tr>
+<tr><td><span class="rolechip">operator</span></td><td>Shop-floor entry — production counts, stoppages, rejects.</td></tr>
+<tr><td><span class="rolechip r-q">quality</span></td><td>Inspections, first-article, pressure tests, quality gates.</td></tr>
+<tr><td><span class="rolechip">procurement</span></td><td>Raise requisitions and purchase orders.</td></tr>
+<tr><td><span class="rolechip">viewer</span></td><td>Read-only visibility.</td></tr>
+<tr><td><span class="rolechip r-eng">engineer</span></td><td>Create/edit items, BOMs, routings, drawings; apply the "Developed" stamp.</td></tr>
+<tr><td><span class="rolechip r-store">store</span></td><td>Stock receipts, issues, transfers, and replenishment worklists.</td></tr>
+</tbody>
+</table>
+
+<h2 id="authority">6 · Authority rules</h2>
+<div class="reg"><ul>
+<li><b>Order release.</b> Primary authority = <b>General Manager</b>; backup = <b>Head of Production &amp; Planning</b> when the GM is away. A configured approval right, not a role.</li>
+<li><b>Quality is independent.</b> The Head of Quality &amp; Engineering reports to the General Manager / Board, never into Production — so output pressure cannot overrule quality.</li>
+<li><b>Segregation of duties.</b> Buying (procurement), receiving (stores), and paying (finance) are distinct roles held by distinct seats wherever staffing allows.</li>
+<li><b>Multi-position.</b> A person's permissions are the <b>union</b> of the roles of every seat they hold. Several top seats (General Manager, System Administrator, Procurement) may be held together today; they are named separately so they can be delegated as the business grows.</li>
+</ul></div>
+
+<div class="flag">
+<h3>&#9873; Critical-part QC authorisation — build this into the UI</h3>
+<p>Because the <b>Head of Quality &amp; Engineering holds both quality and design</b>, a part they designed could otherwise be quality-signed by the same person. For parts marked <b>critical / important</b>, the quality gate requires an <b>extra authorisation from a Director / General Manager</b>, on top of the Quality Head. This is a three-part requirement to carry into the build:</p>
+<div class="reg"><ul>
+<li>a <code>critical</code> flag on the <b>item</b> register;</li>
+<li>an <b>approval rule</b>: critical part + quality gate → mandatory Director sign-off (a hard gate);</li>
+<li>surfaced on the <b>Quality-gate screen</b> as a required second authorisation before the lot can pass.</li>
+</ul></div>
+<p class="mini">Logged here so it is not lost when the Quality module (Wave 5) is built.</p>
+</div>
+
+<div class="rule"></div>
+<p class="mini">Organisation &amp; Authority — v1.0. Companion to THE BRAIN v1.1. Wave 1 seeds these departments, positions, reporting lines, authority levels, and position→role mappings; employees are then placed into seats in the software. Changes follow the BRAIN's §11 change-control.</p>
+
+</main>
+</body>
+</html>

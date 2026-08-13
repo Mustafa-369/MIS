@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE BRAIN — Aaliqadr Operations Platform</title>
+<style>
+:root{
+  --ink:#1f2430; --ink-soft:#4a5163; --line:#e2e5ec; --bg:#fbfaf7; --card:#ffffff;
+  --navy:#1f3864; --navy-soft:#2f4a7a;
+  --cnc:#2563eb; --cnc-bg:#e8f0fe;
+  --turn:#b45309; --turn-bg:#fdf1e3;
+  --hose:#0d9488; --hose-bg:#e2f4f1;
+  --pharma:#7c3aed; --pharma-bg:#efe8fb;
+  --ex:#15803d; --ex-bg:#eef7ee;
+  --warn:#b91c1c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.6;font-size:16px}
+.wrap{max-width:900px;margin:0 auto;padding:0 22px 120px}
+header.cover{background:linear-gradient(160deg,#1f3864,#3a5a92);color:#fff;
+  margin:0 -22px 40px;padding:56px 40px 44px;border-radius:0 0 24px 24px}
+.wrapouter{max-width:900px;margin:0 auto}
+header.cover h1{font-size:44px;margin:0 0 6px;letter-spacing:-.5px;font-weight:800}
+header.cover .sub{font-size:18px;opacity:.9;margin:0 0 22px}
+header.cover .meta{display:flex;flex-wrap:wrap;gap:8px}
+header.cover .chip{background:rgba(255,255,255,.14);padding:5px 12px;border-radius:999px;font-size:13px}
+h2{font-size:27px;margin:56px 0 6px;color:var(--navy);letter-spacing:-.3px;font-weight:800;
+  border-bottom:2px solid var(--line);padding-bottom:8px}
+h3{font-size:20px;margin:30px 0 6px;color:var(--ink);font-weight:700}
+p{margin:10px 0}
+.lead{font-size:18px;color:var(--ink-soft)}
+.legend{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:18px 0}
+.tag{display:inline-block;padding:2px 10px;border-radius:999px;font-size:12.5px;font-weight:600;margin:2px 4px 2px 0;white-space:nowrap}
+.t-cnc{background:var(--cnc-bg);color:var(--cnc)} .t-turn{background:var(--turn-bg);color:var(--turn)}
+.t-hose{background:var(--hose-bg);color:var(--hose)} .t-pharma{background:var(--pharma-bg);color:var(--pharma)}
+.t-all{background:#eef1f6;color:#334155}
+.neuron{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:18px 0;
+  box-shadow:0 1px 2px rgba(20,30,60,.04)}
+.neuron .nid{display:inline-block;background:var(--navy);color:#fff;font-weight:800;font-size:13px;
+  padding:3px 10px;border-radius:8px;margin-right:10px;letter-spacing:.4px}
+.neuron h3{display:inline;margin:0}
+.neuron .body{margin-top:12px}
+.ex{background:var(--ex-bg);border-left:4px solid var(--ex);border-radius:0 10px 10px 0;
+  padding:12px 16px;margin:14px 0;font-size:15px}
+.ex b{color:var(--ex)}
+.applies{margin-top:12px;font-size:14px;color:var(--ink-soft)}
+.applies .lbl{font-weight:700;color:var(--ink);margin-right:6px}
+table.matrix{width:100%;border-collapse:collapse;margin:20px 0;font-size:14px;background:var(--card);
+  border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.matrix th,table.matrix td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+table.matrix thead th{background:var(--navy);color:#fff;font-weight:700}
+table.matrix tbody th,table.matrix th[scope=row]{background:#f4f6fa;font-weight:700;color:var(--navy)}
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:22px 0;overflow-x:auto}
+.diagram .cap{font-size:13px;color:var(--ink-soft);margin:0 0 10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.callout{background:#fff8ec;border:1px solid #f0dcae;border-radius:12px;padding:16px 20px;margin:20px 0}
+.callout h3{margin-top:0;color:var(--turn)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:12px 0;padding:4px 18px}
+details summary{cursor:pointer;font-weight:700;color:var(--navy);padding:12px 0;font-size:16px}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details .reg{font-size:14.5px}
+.reg code{background:#eef1f6;padding:1px 6px;border-radius:5px;font-size:13px;color:#1e3a68;font-weight:600}
+.reg li{margin:5px 0}
+.mini{font-size:13px;color:var(--ink-soft)}
+.svgbox svg{max-width:100%;height:auto;display:block;margin:auto}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 22px;margin:6px 0 10px;columns:2;column-gap:26px}
+.toc a{color:var(--navy-soft);text-decoration:none;font-size:14.5px;display:block;padding:3px 0}
+.toc a:hover{text-decoration:underline}
+.rule{height:1px;background:var(--line);margin:40px 0}
+:root{
+  --c-teal:#0d9488; --c-teal-bg:#e2f4f1;
+  --c-purple:#7c3aed; --c-purple-bg:#efe8fb;
+  --c-amber:#b45309; --c-amber-bg:#fdf1e3;
+  --c-gray:#475569; --c-gray-bg:#eef1f6;
+  --c-coral:#e11d48; --c-coral-bg:#fde7ec;
+}
+.th{font-weight:700;font-size:13px} .ts{font-size:11.5px;fill:var(--ink-soft)}
+.c-teal rect{fill:var(--c-teal-bg);stroke:var(--c-teal)} .c-teal text{fill:#0b6b62}
+.c-purple rect{fill:var(--c-purple-bg);stroke:var(--c-purple)} .c-purple text{fill:#5b23b0}
+.c-amber rect{fill:var(--c-amber-bg);stroke:var(--c-amber)} .c-amber text{fill:#8a3f06}
+.c-gray rect{fill:var(--c-gray-bg);stroke:var(--c-gray)} .c-gray text{fill:#334155}
+.c-coral rect{fill:var(--c-coral-bg);stroke:var(--c-coral)} .c-coral text{fill:#a3123b}
+.arr{stroke:#94a3b8;stroke-width:1.6;fill:none}
+.vflow{margin:4px 0}
+.vn{background:#fff;border:1px solid var(--line);border-left:4px solid #94a3b8;border-radius:10px;padding:9px 14px;margin:0 auto 8px;max-width:600px}
+.vn b{font-size:14.5px}
+.vn .vs{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+.vn.dec{border-style:dashed;border-left-color:var(--navy);background:#f7f9fc;text-align:center}
+.varrow{text-align:center;color:#aeb4c2;font-size:17px;line-height:1;margin:-2px 0 5px}
+.vbranch{display:flex;gap:8px;flex-wrap:wrap;max-width:600px;margin:0 auto 8px}
+.vopt{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:12.5px}
+.vopt .cond{display:block;font-weight:700;color:var(--navy);font-size:11px;margin-bottom:2px;text-transform:uppercase;letter-spacing:.3px}
+.b-cnc{border-left-color:var(--cnc)} .b-hose{border-left-color:var(--hose)} .b-turn{border-left-color:var(--turn)} .b-pharma{border-left-color:var(--pharma)} .b-gate{border-left-color:#e11d48} .b-cost{border-left-color:var(--turn)} .b-gray{border-left-color:#94a3b8}
+@media(max-width:640px){.toc{columns:1}header.cover h1{font-size:34px}}
+</style>
+</head>
+<body>
+<div class="wrapouter">
+<header class="cover">
+  <h1>THE&nbsp;BRAIN</h1>
+  <p class="sub">The thinking core of the Aaliqadr Operations Platform</p>
+  <div class="meta">
+    <span class="chip">v1.1 · LOCKED</span>
+    <span class="chip">Status: LOCKED — the controlled reference</span>
+    <span class="chip">Jeedimetla · Ranigunj</span>
+    <span class="chip">Inventory · procurement · confidential vault</span>
+  </div>
+</header>
+</div>
+
+<main class="wrap">
+
+<p class="lead">This document explains the thinking core of your platform — the decisions that never change, so everything built on top can change freely. It is written to be <b>seen</b>: a big picture first, worked examples for every decision, flowcharts for every workflow, and a detail layer underneath for review.</p>
+
+<div class="legend">
+  <b>What changed in v6.</b> Added a full <b>Inventory &amp; procurement</b> section (Section&nbsp;5) — the <b>buildable view</b> (search a 12L connector, see what's in stock <i>and</i> what's buildable from parts), the <b>four kinds of "spare"</b> kept separate, and <b>two-track procurement</b> (replenishment vs in-app). Corrected the <b>"Developed" stamp</b> (it lives on the SKU, not before it). Clarified <b>part vs assembly SKUs</b>, added the <b>confidential document vault</b>, and noted operators tend <b>several jobs</b>. Neuron / Cost-Neuron numbers unchanged.
+  <div style="margin-top:12px">
+    <b>Category tags:</b>
+    <span class="tag t-cnc">CNC fittings</span>
+    <span class="tag t-turn">Manual turning</span>
+    <span class="tag t-hose">Hose (rubber &amp; pharma)</span>
+    <span class="tag t-all">All categories</span>
+  </div>
+</div>
+
+<div class="toc">
+  <a href="#big">1 · The big picture</a>
+  <a href="#matrix">2 · Which decision affects what</a>
+  <a href="#neurons">3 · The Neurons, with examples</a>
+  <a href="#process">4 · Process &amp; stations (how work flows)</a>
+  <a href="#inventory">5 · Inventory &amp; procurement</a>
+  <a href="#cost">6 · The cost brain</a>
+  <a href="#flows">7 · Workflows (flowcharts)</a>
+  <a href="#day">8 · A production day</a>
+  <a href="#detail">9 · Detail layer (registers)</a>
+  <a href="#scope">10 · Scope &amp; build order</a>
+  <a href="#change">11 · How to change the BRAIN</a>
+</div>
+
+<!-- ================= BIG PICTURE ================= -->
+<h2 id="big">1 · The big picture</h2>
+<p>Your whole business runs as <b>four ways of fulfilling work</b> sitting on <b>one shared spine</b> of core information, wrapped by services every department reuses. Standard fittings are machined on CNC; custom parts are turned by hand; hose is assembled; and some things are simply bought and resold. All of it flows through the same items, the same stock, the same orders.</p>
+
+<div class="diagram svgbox">
+<p class="cap">The BRAIN — one spine, four ways to fulfil</p>
+<svg viewBox="0 0 700 470" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+<g class="c-gray"><rect x="250" y="24" width="200" height="46" rx="9" stroke-width="1"/><text class="th" x="350" y="52" text-anchor="middle">One customer order</text></g>
+<line x1="330" y1="70" x2="120" y2="104" class="arr" marker-end="url(#ar)"/>
+<line x1="340" y1="70" x2="285" y2="104" class="arr" marker-end="url(#ar)"/>
+<line x1="360" y1="70" x2="415" y2="104" class="arr" marker-end="url(#ar)"/>
+<line x1="370" y1="70" x2="580" y2="104" class="arr" marker-end="url(#ar)"/>
+<g class="c-cnc"><rect x="40" y="106" width="150" height="58" rx="9" fill="#e8f0fe" stroke="#2563eb" stroke-width="1"/><text class="th" x="115" y="130" text-anchor="middle" fill="#1d4ed8">CNC fittings</text><text class="ts" x="115" y="148" text-anchor="middle">batch · OEE</text></g>
+<g><rect x="205" y="106" width="150" height="58" rx="9" fill="#fdf1e3" stroke="#b45309" stroke-width="1"/><text class="th" x="280" y="130" text-anchor="middle" fill="#8a3f06">Manual turning</text><text class="ts" x="280" y="148" text-anchor="middle">custom · utilisation</text></g>
+<g><rect x="370" y="106" width="150" height="58" rx="9" fill="#e2f4f1" stroke="#0d9488" stroke-width="1"/><text class="th" x="445" y="130" text-anchor="middle" fill="#0b6b62">Hose assembly</text><text class="ts" x="445" y="148" text-anchor="middle">cut · crimp/weld/flare · yield</text></g>
+<g><rect x="535" y="106" width="150" height="58" rx="9" fill="#eef1f6" stroke="#475569" stroke-width="1"/><text class="th" x="610" y="130" text-anchor="middle" fill="#334155">Trading</text><text class="ts" x="610" y="148" text-anchor="middle">buy &amp; resell</text></g>
+<line x1="115" y1="164" x2="115" y2="204" class="arr" marker-end="url(#ar)"/>
+<line x1="280" y1="164" x2="280" y2="204" class="arr" marker-end="url(#ar)"/>
+<line x1="445" y1="164" x2="445" y2="204" class="arr" marker-end="url(#ar)"/>
+<line x1="610" y1="164" x2="610" y2="204" class="arr" marker-end="url(#ar)"/>
+<g class="c-purple"><rect x="40" y="206" width="645" height="150" rx="14" stroke-width="1"/>
+<text class="th" x="62" y="230" fill="#5b23b0">The spine — the ~10 registers every job hangs off</text>
+<g fill="#efe8fb" stroke="#7c3aed">
+<rect x="60" y="246" width="118" height="30" rx="6"/><rect x="188" y="246" width="118" height="30" rx="6"/><rect x="316" y="246" width="118" height="30" rx="6"/><rect x="444" y="246" width="118" height="30" rx="6"/><rect x="572" y="246" width="94" height="30" rx="6"/>
+<rect x="60" y="286" width="118" height="30" rx="6"/><rect x="188" y="286" width="118" height="30" rx="6"/><rect x="316" y="286" width="118" height="30" rx="6"/><rect x="444" y="286" width="118" height="30" rx="6"/><rect x="572" y="286" width="94" height="30" rx="6"/>
+</g>
+<g fill="#5b23b0" class="ts" text-anchor="middle" font-weight="600">
+<text x="119" y="266">Item / SKU</text><text x="247" y="266">Party</text><text x="375" y="266">Location</text><text x="503" y="266">Employee</text><text x="619" y="266">Machine</text>
+<text x="119" y="306">Routing</text><text x="247" y="306">BOM</text><text x="375" y="306">Lot / trace</text><text x="503" y="306">Cost centre</text><text x="619" y="306">Tool</text>
+</g></g>
+<g class="c-coral"><rect x="40" y="382" width="645" height="54" rx="12" stroke-width="1"/>
+<text class="th" x="350" y="403" text-anchor="middle" fill="#a3123b">Shared services — reused by every department</text>
+<text class="ts" x="350" y="422" text-anchor="middle">traceability · costing · non-blocking approvals · security · analytics</text></g>
+</svg>
+</div>
+
+<p><b>The three reasons it exists.</b> Every part of the BRAIN serves one of your three winning measures: <b>Quality</b> (full traceability + revision control + quality gates), <b>Delivery &amp; smooth communication</b> (scheduling, live order board, internal requisitions, and approvals that never make you wait), and <b>Good price</b> (true cost per job + efficiency measures). If a feature serves none of these, it does not belong here.</p>
+
+
+
+<!-- ================= MATRIX ================= -->
+<h2 id="matrix">2 · Which decision affects what</h2>
+<p>How the one platform handles your realities. The big change: <b>a single HOSE department</b>, split into two <b>process-based units</b>; rubber vs pharma is an <b>attribute</b>, not a separate category.</p>
+<table class="matrix">
+<thead><tr><th></th><th>CNC fittings</th><th>Manual turning</th><th>Hose assembly (one dept)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Where</th><td>Jeedimetla</td><td>Jeedimetla</td><td>Unit 1 (crimp) Ranigunj · Unit 2 (weld / flare / line / buff) Jeedimetla</td></tr>
+<tr><th scope="row">How it's made</th><td>Batch CNC machining</td><td>One-off hand turning</td><td>Cut + the terminations the order needs (crimp / weld / flare)</td></tr>
+<tr><th scope="row">Efficiency measure</th><td><b>OEE</b></td><td><b>Utilisation</b> (operator-bound)</td><td><b>Yield</b> / first-pass</td></tr>
+<tr><th scope="row">Quality gate</th><td>First-article approval</td><td>Dimension vs drawing</td><td>Pressure / leak test — <b>pharma adds cert + cleanliness automatically</b></td></tr>
+<tr><th scope="row">Cost basis</th><td>Bar by weight; forged by piece</td><td>Bar by weight</td><td>Hose by metre; fittings by piece</td></tr>
+<tr><th scope="row">Rubber vs pharma</th><td>—</td><td>—</td><td>An <b>attribute</b> on the hose; pharma triggers extra QC / cert steps</td></tr>
+<tr><th scope="row">Which unit(s)</th><td>—</td><td>—</td><td>Routes to whichever units its <b>process</b> needs (often both)</td></tr>
+</tbody>
+</table>
+<p class="mini">The order flows by its process and the units its operations need — never by "what type of hose it is."</p>
+
+<!-- ================= NEURONS ================= -->
+<h2 id="neurons">3 · The Neurons, with examples</h2>
+<p>Twelve decisions form the thinking core. Each is stated plainly, shown with a real example, and tagged with the categories it affects.</p>
+
+<div class="neuron">
+<span class="nid">N-01</span><h3>Departments are the menu, not separate systems</h3>
+<div class="body"><p>Your 17 departments decide the screens and permissions people see — not 17 databases. (We just merged the two hose categories into a single HOSE department split into process-based units — the same principle in action.) Everything sits on the one shared spine.</p>
+<div class="ex"><b>In real life:</b> add a department tomorrow and we add screens and permissions — nothing underneath is rebuilt.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-02</span><h3>One item register, and clicking a SKU shows everything</h3>
+<div class="body"><p>Every material, fitting, hose, tool, and finished good lives in one register. Open any SKU and see its process, its assemblies, its department, and its documents at once. Each department sees only its filtered slice. Rubber vs pharma is just an <b>attribute</b> here, not a category. A part SKU and an assembly SKU are <b>separate items</b>; a part sits in unlimited assemblies through the BOM — never owned by one.</p>
+<div class="ex"><b>In real life:</b> click the SS304 nut and see its drawing, its bar, its CNC route, its cost, and every order it's on. And once you configure an assembly, <b>Save it as an item</b> — repeat orders pick it instantly.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-cnc">CNC</span><span class="tag t-turn">Turning</span><span class="tag t-hose">Hose</span> — every category's items live here.</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-03</span><h3>One register for customers and suppliers</h3>
+<div class="body"><p>A "party" can be a customer, a supplier, or both. A generic cash party covers walk-ins.</p>
+<div class="ex"><b>In real life:</b> a firm you buy bar from and sell hose to is one record with two roles — not two half-records that drift apart.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-04</span><h3>A process is the product meeting the machines</h3>
+<div class="body"><p>The product says <b>what must happen</b> (weld this end, flare this hose, thread this fitting); the stations say <b>how and where</b> it can happen. Each <b>end</b> of a hose is configured on its own; each <b>part</b> is sourced on its own (stock / buy / make); and <b>add-ons</b> compose from the same parts. So customisation is unlimited by construction.</p>
+<div class="ex"><b>In real life:</b> a silicone hose with a straight TC one end and a 90° TC-to-flange (bend turned, flange welded) the other — the BRAIN composes it from primitives; no "silicone-90°-flange" catalogue entry ever had to exist.</div>
+<div class="applies"><span class="lbl">Affects each category differently:</span> <span class="tag t-cnc">CNC</span> machines fittings; <span class="tag t-turn">Turning</span> makes custom parts; <span class="tag t-hose">Hose</span> routes to whichever units its operations need.</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-05</span><h3>Money is for cost, not invoices</h3>
+<div class="body"><p>The BRAIN computes true cost in three layers (material, conversion, overhead). No invoicing, tax, or ledgers — deliberate. Detail in <a href="#cost">the cost brain</a>.</p>
+<div class="ex"><b>In real life:</b> you learn a 665&nbsp;mm assembly truly costs ₹X to make, so you price with confidence.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span> — cost basis differs (see the matrix).</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-06</span><h3>Traceability is a family tree, and the stock record can't be secretly edited</h3>
+<div class="body"><p>Every lot knows its parents and children. The stock ledger is <b>append-only and hash-chained</b> — each entry fingerprints the one before, so tampering visibly breaks the chain. Pharma requirements (cert, cleanliness, extra traceability) are triggered automatically by the hose's <b>pharma attribute</b> — no separate department needed.</p>
+<div class="ex"><b>In real life:</b> a pharma hose fails a test two years later — trace it back to the exact PTFE lot, supplier, and receipt, and forward to every order that lot touched.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All</span> — strictest for pharma-flagged hose; critical for all pressure-safety hose.</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-07</span><h3>Designs are versioned — old versions are never erased</h3>
+<div class="body"><p>Change a design or process and a <b>new revision</b> is created; the old one is kept, and every job records the revision it was built to.</p>
+<div class="ex"><b>In real life:</b> improve the nut from a 45&nbsp;mm bar (Rev&nbsp;1) to a 42&nbsp;mm bar (Rev&nbsp;2). New orders use Rev&nbsp;2; a batch already running stays on Rev&nbsp;1; any piece can be traced to the exact design it was made to.</div>
+<div class="applies"><span class="lbl">Matters most for:</span><span class="tag t-cnc">CNC</span><span class="tag t-turn">Turning</span> and pharma (certified revisions); hose assemblies carry versioned BOMs too.</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-08</span><h3>Shared services are built once</h3>
+<div class="body"><p>Login, audit, workflow, attachments, notifications, barcodes, dashboards — one set, reused everywhere.</p>
+<div class="ex"><b>In real life:</b> the barcode identifying a lot on the CNC floor is the same system identifying a hose lot at Ranigunj.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-09</span><h3>Approvals never make you wait</h3>
+<div class="body"><p>Approvals are a <b>trail, not a toll booth</b>. Work flows immediately; the responsible person is notified and can review or reverse afterwards. Only <b>safety/quality gates</b> (first-article, pressure test) actually stop the line. <b>Critical parts</b> add one more hard gate — a second, Director-level authorisation on their quality check (see the callout after the Neurons).</p>
+<div class="ex"><b>In real life:</b> a purchase within its limit just happens, recorded, no waiting. A pressure test genuinely blocks dispatch — because that one is safety, not paperwork.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span> — hard gates concentrated in hose quality.</div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-10</span><h3>The BRAIN knows your org chart</h3>
+<div class="body"><p>Department → position → employee, with reporting lines and heads. This is how the system knows <b>who</b> is responsible, without naming individuals in the design. A position <b>drives its roles</b> (WD-03), and an employee may hold several positions (roles combine). The role set: admin, sales, planner, operator, quality, procurement, viewer, plus <b>engineer</b> and <b>store</b> (there is no separate "security" role). The table is named <code>job_position</code> (a MySQL reserved-word rename; the concept is unchanged).</p>
+<div class="ex"><b>In real life:</b> "route to the requesting department's head" always finds the right person, even after a promotion — it reads the position, not a name.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-11</span><h3>Approval rules are settings, not code</h3>
+<div class="body"><p>Each rule is keyed by document type, department, and a condition (like a value threshold). Change a rule and you edit a setting — never the software.</p>
+<div class="ex"><b>In real life:</b> a ₹5,000 purchase and a ₹5,00,000 purchase can follow different paths, and you can change either yourself.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="neuron">
+<span class="nid">N-12</span><h3>Every decision is recorded and signed — without slowing work</h3>
+<div class="body"><p>Actions carry who, when, and a signature; reviews can delegate and auto-escalate. The record is created <b>while</b> the work proceeds.</p>
+<div class="ex"><b>In real life:</b> you always know who signed off what — but no operator stands idle waiting for a signature.</div>
+<div class="applies"><span class="lbl">Applies to:</span><span class="tag t-all">All categories</span></div></div>
+</div>
+
+<div class="callout" id="critical">
+<h3>&#9873; Critical-part second authorisation — build into the UI</h3>
+<p>Some parts are <b>critical / important</b>. Because the person who designs a part may also hold quality authority, a critical part's <b>quality gate requires a second, Director / General-Manager authorisation</b> on top of the Quality Head before the lot can pass. It is a hard gate (N-09) driven by config (N-11). Three requirements carry into the build:</p>
+<div class="reg"><ul>
+<li>a <code>critical</code> flag on the <b>item</b> register (N-02);</li>
+<li>an <b>approval rule</b>: critical part + quality gate &#8594; mandatory Director sign-off;</li>
+<li>surfaced on the <b>Quality-gate screen</b> as a required second authorisation.</li>
+</ul></div>
+</div>
+
+<!-- ================= PROCESS & STATIONS ================= -->
+<h2 id="process">4 · Process &amp; stations — how work really flows</h2>
+<p><b>A process is where the product meets the machines.</b> The product says what must happen; the <b>stations</b> say how and where it can happen. Neither alone is the process — the two combined are.</p>
+
+<div class="callout">
+<h3>A process step has a type</h3>
+<p>A process is an <b>ordered list of steps</b>, and each step is one of four kinds:</p>
+<div class="reg"><ul style="margin:6px 0 0">
+<li><b>Station</b> — runs on a machine / capability (scheduling picks the actual machine).</li>
+<li><b>Gate</b> — a quality checkpoint that must pass (first-article, pressure test).</li>
+<li><b>Requirement</b> — a manual step, no machine (packaging, finishing).</li>
+<li><b>Outsourced</b> — leaves to a vendor and returns (plating).</li>
+</ul></div></div>
+
+<h3>Stations bind to a capability, not a named machine</h3>
+<p>A step says "needs <i>a</i> TIG welding station," and scheduling picks which actual machine runs it. Unique machines (the flaring machine) resolve to the only one automatically. This keeps you flexible when a machine is busy, down, or newly bought.</p>
+
+<h3>Your station register</h3>
+<p><b>HOSE · Unit 1 — Ranigunj (rubber / crimp)</b></p>
+<table class="matrix"><thead><tr><th>Station</th><th>Qty</th><th>Does</th><th>Consumes</th></tr></thead><tbody>
+<tr><td>Rubber hose cutting</td><td>1</td><td>cut rubber hose</td><td>blades</td></tr>
+<tr><td>Rubber hose skiving</td><td>2</td><td>skive</td><td>—</td></tr>
+<tr><td>Hose crimper</td><td>1</td><td>crimp ends</td><td>maintenance</td></tr>
+</tbody></table>
+<p><b>HOSE · Unit 2 — Jeedimetla (SS / PTFE — weld / flare / line / buff)</b></p>
+<table class="matrix"><thead><tr><th>Station</th><th>Qty</th><th>Does</th><th>Consumes</th></tr></thead><tbody>
+<tr><td>SS / PTFE hose cutting</td><td>1</td><td>cut SS / PTFE hose</td><td>blades</td></tr>
+<tr><td>TIG welding</td><td>2</td><td>weld fittings to hose</td><td>TIG wire</td></tr>
+<tr><td>Flaring (de-convolution)</td><td>2 · 1"–2" and 2"–3"</td><td>flare convoluted hose by size</td><td>maintenance</td></tr>
+<tr><td>Teflon lining</td><td>1</td><td>insert PTFE lining</td><td>maintenance</td></tr>
+<tr><td>Buffing</td><td>1</td><td>buff / finish</td><td>buffing wheels</td></tr>
+</tbody></table>
+<p><b>CNC · Jeedimetla</b></p>
+<table class="matrix"><thead><tr><th>Station</th><th>Qty</th><th>Does</th><th>Consumes</th></tr></thead><tbody>
+<tr><td>RM cutting (cutting m/c + Traub)</td><td>—</td><td>cut bar to blanks</td><td>blades</td></tr>
+<tr><td>CNC machines (AQ01–AQ22)</td><td>22 · AQ21/22 R&amp;D, out of OEE</td><td>machining</td><td>insert bits, tooling bars, drills</td></tr>
+<tr><td>Thread rolling</td><td>—</td><td>roll threads (some sizes)</td><td>size-specific die (tooling)</td></tr>
+</tbody></table>
+<p><b>Manual turning · Jeedimetla</b></p>
+<table class="matrix"><thead><tr><th>Station</th><th>Qty</th><th>Does</th><th>Limit</th></tr></thead><tbody>
+<tr><td>Lathes</td><td>3 (1 with threading)</td><td>turn custom parts</td><td>operators tend several jobs; threading only on 1 lathe</td></tr>
+</tbody></table>
+<p class="mini"><b>Other steps that aren't powered stations:</b> pressure-test rig (planned, count 0 — the gate exists now), packaging (a requirement), plating (outsourced to a vendor and returned).</p>
+
+<h3>A process = an ordered list of typed steps</h3>
+<p>Here is one process fully, showing all four step types at once — your MS threaded fitting:</p>
+<table class="matrix"><thead><tr><th>#</th><th>Step</th><th>Type</th><th>Runs on / who</th><th>Gate?</th></tr></thead><tbody>
+<tr><td>1</td><td>RM cutting</td><td>Station</td><td>cutting m/c + Traub</td><td>—</td></tr>
+<tr><td>2</td><td>CNC setup</td><td>Station</td><td>a CNC machine</td><td>—</td></tr>
+<tr><td>3</td><td>CNC machining</td><td>Station</td><td>same CNC machine</td><td>—</td></tr>
+<tr><td>4</td><td>Thread rolling</td><td>Station</td><td>thread-rolling station (size die)</td><td>—</td></tr>
+<tr><td>5</td><td>First-article approval</td><td>Gate</td><td>QC</td><td><b>yes</b></td></tr>
+<tr><td>6</td><td>Production run</td><td>Station</td><td>the CNC machine</td><td>—</td></tr>
+<tr><td>7</td><td>Plating <i>(only if mild steel)</i></td><td>Outsourced</td><td>plating vendor</td><td>—</td></tr>
+<tr><td>8</td><td>Finishing</td><td>Requirement</td><td>bench (manual)</td><td>—</td></tr>
+<tr><td>9</td><td>Packaging</td><td>Requirement</td><td>—</td><td>—</td></tr>
+</tbody></table>
+<p>Your <b>SS corrugated hose</b>, same vocabulary: cut <i>(station)</i> → weld End A <i>(station)</i> → weld End B <i>(station)</i> → buff <i>(station)</i> → pressure test <i>(gate)</i> → pack <i>(requirement)</i>.</p>
+
+<h3>Add-ons — compose anything</h3>
+<p>An add-on is <b>one or more SKUs + an operation + a disposition</b> (built into the assembly, or a companion that ships with it). Your camlock example: pick the camlock and flange SKUs, add "weld flange to camlock," mark it "ships with" — and it travels with the hose, costed and traced.</p>
+
+<h3>Save it once, reorder instantly</h3>
+<p>Configure an assembly once (hose body + each end + add-ons + its process) and <b>Save it as an item</b> — a recurring SKU carrying its BOM and process. A repeat order just picks it; only length and quantity are entered. Your common assemblies become a quick-pick catalogue, and because a saved item already points at a locked process, it flows straight through.</p>
+
+<h3>Where spares fit</h3>
+<p>"Spare" means four different things (consumables, maintenance spares, components, packaging), kept as separate categories — detailed in <a href="#inventory">Inventory</a>. The rule here: machine <b>consumables</b> live on the <b>station</b> (a blade belongs to the cutting machine, inherited by every process that cuts); <b>product-specific tooling</b> (a size's crimp die, a fixture, a thread-rolling die) attaches to the <b>operation / item</b>, and if it breaks or is overused, CN-11 charges the excess to that job.</p>
+
+<div class="callout">
+<h3>The "Developed" stamp on a SKU</h3>
+<p>An SKU carries a <b>validation record</b> — a "Developed" stamp: the approved, tested prototype design file is uploaded to the item, certifying <i>this design is proven and trusted</i>, with who stamped it and when. Future minor revisions are still allowed (N-07), but the stamp is the mark of trust — a record that this part reached a perfect, tested design. It lives <b>on</b> the SKU, not before it.</p>
+</div>
+
+<!-- ================= INVENTORY ================= -->
+<h2 id="inventory">5 · Inventory &amp; procurement</h2>
+<p>Stock is tracked per <b>item + lot + location</b> — every part, hose, and assembly has its own balance. Everything moves through the one append-only, hash-chained ledger, so nothing is ever edited silently.</p>
+
+<div class="diagram svgbox">
+<p class="cap">How inventory moves</p>
+<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ai" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5"/></marker></defs>
+<g class="c-gray"><rect x="12" y="48" width="96" height="46" rx="8" stroke-width="1"/><text class="th" x="60" y="75" text-anchor="middle">Supplier</text></g>
+<text x="126" y="64" class="ts" text-anchor="middle">receipt</text><line x1="110" y1="71" x2="140" y2="71" class="arr" marker-end="url(#ai)"/>
+<g class="c-teal"><rect x="142" y="48" width="104" height="46" rx="8" stroke-width="1"/><text class="th" x="194" y="68" text-anchor="middle">Stock</text><text class="ts" x="194" y="84" text-anchor="middle">item·lot·location</text></g>
+<text x="266" y="64" class="ts" text-anchor="middle">issue</text><line x1="248" y1="71" x2="278" y2="71" class="arr" marker-end="url(#ai)"/>
+<g class="c-amber"><rect x="280" y="48" width="88" height="46" rx="8" stroke-width="1"/><text class="th" x="324" y="75" text-anchor="middle">WIP</text></g>
+<text x="390" y="58" class="ts" text-anchor="middle">consume</text><text x="390" y="70" class="ts" text-anchor="middle">parts</text><line x1="368" y1="74" x2="398" y2="74" class="arr" marker-end="url(#ai)"/>
+<g class="c-purple"><rect x="400" y="48" width="96" height="46" rx="8" stroke-width="1"/><text class="th" x="448" y="68" text-anchor="middle">Assembly</text><text class="ts" x="448" y="84" text-anchor="middle">makes a lot</text></g>
+<text x="516" y="64" class="ts" text-anchor="middle">stock</text><line x1="498" y1="71" x2="528" y2="71" class="arr" marker-end="url(#ai)"/>
+<g class="c-teal"><rect x="530" y="48" width="96" height="46" rx="8" stroke-width="1"/><text class="th" x="578" y="68" text-anchor="middle">Finished</text><text class="ts" x="578" y="84" text-anchor="middle">stock</text></g>
+<line x1="578" y1="94" x2="578" y2="120" class="arr" marker-end="url(#ai)"/>
+<g class="c-coral"><rect x="530" y="122" width="96" height="42" rx="8" stroke-width="1"/><text class="th" x="578" y="147" text-anchor="middle">Dispatch</text></g>
+<text x="140" y="132" class="ts">transfers between sites are moves too</text>
+<g class="c-gray"><rect x="12" y="186" width="666" height="38" rx="9" stroke-width="1"/><text class="th" x="345" y="210" text-anchor="middle">Every move = one entry in the append-only, hash-chained ledger — nothing edited silently</text></g>
+<g class="c-teal"><rect x="12" y="234" width="666" height="52" rx="9" stroke-width="1"/><text class="th" x="30" y="255">Buildable view</text><text class="ts" x="30" y="274">search "12L straight connector" &#8594; shows IN STOCK only when body + nut + ferrule are all available, not just the body</text></g>
+</svg>
+</div>
+
+<h3>The buildable view (your 12L example)</h3>
+<p>Because the nut, the ferrule, and the body are each their own SKU with their own stock, the system answers two questions at once: <b>how many loose 12L nuts</b> you have, <b>and</b> how many <b>complete 12L straight connectors you can build right now</b> — the smaller of body / nut / ferrule available. So searching an assembly shows its own finished stock <b>and</b> what's buildable from parts on hand.</p>
+
+<h3>Four kinds of "spare" — kept separate</h3>
+<p>The word "spare" covers four different things, and the system never lumps them:</p>
+<table class="matrix"><thead><tr><th>Kind</th><th>Examples</th><th>Belongs to</th></tr></thead><tbody>
+<tr><td>Consumable</td><td>blades, TIG wire, buffing wheels, coolant</td><td>a station (consumed in running)</td></tr>
+<tr><td>Maintenance spare</td><td>machine repair parts</td><td>a machine (as an asset)</td></tr>
+<tr><td>Component</td><td>DIN nuts, ferrules, connector bodies</td><td>products — in assemblies <b>and</b> sold loose (one SKU)</td></tr>
+<tr><td>Packaging</td><td>caps, plastic bags, boxes</td><td>a packing requirement</td></tr>
+</tbody></table>
+<p class="mini">The key: a nut is a <b>component</b>, not a "spare" — so it appears in the buildable view. Calling it a spare would hide it.</p>
+
+<h3>Procurement — two tracks, one flag</h3>
+<p>Every item is either <b>bulk-replenished</b> or <b>procured in-app</b>. Same stock ledger underneath, two behaviours on top.</p>
+<table class="matrix"><thead><tr><th></th><th>Track A — Replenishment</th><th>Track B — In-app procurement</th></tr></thead><tbody>
+<tr><th scope="row">For</th><td>hoses, bulk &amp; standard materials</td><td>tools, consumables, machine spares</td></tr>
+<tr><th scope="row">How</th><td>reorder point + reorder qty → a LOW STOCK / NO STOCK worklist</td><td>requisition → PO → goods receipt → stock</td></tr>
+<tr><th scope="row">Buying</th><td>you buy in bulk, your own way</td><td>done inside the software</td></tr>
+<tr><th scope="row">The industrial bit</th><td>demand-aware: "low" means low against open orders + lead time</td><td>non-blocking approval by value; receipt lands a lot with landed freight</td></tr>
+</tbody></table>
+<p class="mini">A production start that hits a shortfall auto-raises the right one. No invoicing or payment tail — that's deliberately out (N-05).</p>
+
+<!-- ================= COST ================= -->
+<h2 id="cost">6 · The cost brain</h2>
+<p>Cost is built in three layers, and the golden rule is that <b>machine cost and overhead come from two separate pots</b>, so nothing is counted twice.</p>
+<div class="diagram svgbox">
+<p class="cap">How a unit cost is built</p>
+<svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94a3b8" stroke-width="1.5"/></marker></defs>
+<g class="c-teal"><rect x="30" y="30" width="250" height="60" rx="9" stroke-width="1"/><text class="th" x="46" y="55" fill="#0b6b62">A · Raw Material</text><text class="ts" x="46" y="74">BOM (weight/pcs/m) + freight − scrap recovery</text></g>
+<g class="c-purple"><rect x="30" y="102" width="250" height="60" rx="9" stroke-width="1"/><text class="th" x="46" y="127" fill="#5b23b0">B · Conversion</text><text class="ts" x="46" y="146">labour ₹/hr + machine ₹/hr × cycle</text></g>
+<g class="c-amber"><rect x="30" y="174" width="250" height="60" rx="9" stroke-width="1"/><text class="th" x="46" y="199" fill="#8a3f06">C · Overhead</text><text class="ts" x="46" y="218">indirect + facility + tooling (separate pot!)</text></g>
+<line x1="280" y1="60" x2="366" y2="140" class="arr" marker-end="url(#ar3)"/>
+<line x1="280" y1="132" x2="366" y2="150" class="arr" marker-end="url(#ar3)"/>
+<line x1="280" y1="204" x2="366" y2="162" class="arr" marker-end="url(#ar3)"/>
+<g class="c-gray"><rect x="368" y="118" width="210" height="76" rx="10" stroke-width="1"/><text class="th" x="473" y="148" text-anchor="middle" fill="#334155">Unit cost</text><text class="ts" x="473" y="170" text-anchor="middle">estimated → actual → variance</text></g>
+<line x1="473" y1="194" x2="473" y2="236" class="arr" marker-end="url(#ar3)"/>
+<g class="c-teal"><rect x="368" y="238" width="210" height="56" rx="10" stroke-width="1"/><text class="th" x="473" y="262" text-anchor="middle" fill="#0b6b62">Rolls up per lot</text><text class="ts" x="473" y="280" text-anchor="middle">along the family tree</text></g>
+</svg>
+</div>
+<div class="callout">
+<h3>The two-pot rule (CN-02), in plain terms</h3>
+<p>There are two hourly rates. The <b>machine rate</b> holds only the machine's own costs (its depreciation, its power, its coolant, its own maintenance). The <b>overhead rate</b> holds everything else that keeps the plant open (indirect staff, rent, lighting, shared consumables). <b>Every rupee sits in exactly one pot</b>, so when a part is charged both rates it is never charged twice. In our worked example: a machine rate of ~₹211/hr and an overhead rate of ~₹71/hr gave a unit cost of ~₹149.80. Your real numbers replace these.</p>
+</div>
+<details><summary>The eleven Cost Neurons (detail)</summary>
+<div class="reg">
+<ul>
+<li><b>CN-01</b> — three layers: material, conversion, overhead.</li>
+<li><b>CN-02</b> — the two-pot rule: machine costs and overhead never mix.</li>
+<li><b>CN-03</b> — predictable scrap (per unit) is separate from stock-count losses (periodic, pooled).</li>
+<li><b>CN-04</b> — recovered scrap is credited at the <b>market</b> salvage rate (updates over time).</li>
+<li><b>CN-05</b> — inbound freight is added to the material's landed cost.</li>
+<li><b>CN-06</b> — all rates are date-stamped, so old jobs keep old rates.</li>
+<li><b>CN-07</b> — product-specific tooling is charged to that product; general consumables are pooled.</li>
+<li><b>CN-08</b> — material = actual value; conversion = rate × time; overhead = a set rate.</li>
+<li><b>CN-09</b> — every job has an <b>estimate</b> (for quoting) and an <b>actual</b> (after), with the gap shown.</li>
+<li><b>CN-10</b> — <b>material must balance:</b> bought = produced + sold + in stock; any gap is charged to cost, not hidden.</li>
+<li><b>CN-11</b> — <b>actual tooling:</b> a tool that breaks, or is used more than it should be, is charged extra to that job.</li>
+</ul>
+</div>
+</details>
+
+
+
+<!-- ================= WORKFLOWS ================= -->
+<h2 id="flows">7 · Workflows — the flowcharts</h2>
+<p>These are the routings from section 4 playing out. First the general shape of any order, then your four real situations, then the operator's own view.</p>
+
+<div class="diagram"><p class="cap">The order lifecycle (any order)</p><div class="vflow"><div class="vn b-gray"><b>1 · Sales files the order</b><span class="vs">Ranigunj · customer, items, spec, customer PO attached</span></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>2 · Planning explodes each line</b><span class="vs">checks stock for every part</span></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Decision · where does each part come from?</b></div><div class="vbranch"><div class="vopt"><span class="cond">in stock</span>reserve / pick it</div><div class="vopt"><span class="cond">buy</span>PO &#8594; receipt &#8594; incoming QC</div><div class="vopt"><span class="cond">make</span>work order &#8594; CNC or turning</div></div><div class="varrow">&#8595;</div><div class="vn b-cnc"><b>3 · Manufacturing</b><span class="vs">Jeedimetla — machine the made parts; stores issue material</span></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>4 · Quality — first-article / in-process</b></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>5 · Transfer to Ranigunj</b></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>6 · Hose cut + assembly</b><span class="vs">cut to length, then crimp / weld / flare</span></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>7 · Pressure test</b><span class="vs">hard gate — must pass to proceed</span></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>8 · Certificate + packaging</b></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>9 · Dispatch</b><span class="vs">deliver or customer pickup</span></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>10 · Costing</b><span class="vs">estimate vs actual, variance</span></div></div></div>
+
+<h3>Your four real situations</h3>
+<div class="diagram"><p class="cap">Flow A — Make-to-order assembly with self-made fittings</p><div class="vflow"><div class="vn b-gray"><b>Sales files assembly order</b></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>Planning explodes the BOM</b><span class="vs">hose + nut + insert + sleeve</span></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Decision · make or buy the fittings?</b></div><div class="vbranch"><div class="vopt"><span class="cond">self-make</span>RM &#8594; CNC production &#8594; first-article gate</div><div class="vopt"><span class="cond">buy</span>procurement</div></div><div class="varrow">&#8595;</div><div class="vn b-cnc"><b>Transfer fittings to Ranigunj</b></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>Hose from stock, cut to length &#8594; assemble (crimp)</b></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>Pressure test &#8594; certificate &#8594; pack</b></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>Dispatch · costing</b></div></div></div>
+<div class="diagram"><p class="cap">Flow B — Straight from stock (spares / trading)</p><div class="vflow"><div class="vn b-gray"><b>Sales files order</b><span class="vs">e.g. 1/2in hose, 100 m</span></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Decision · in stock?</b></div><div class="vbranch"><div class="vopt"><span class="cond">yes</span>warehouse picks from bin</div><div class="vopt"><span class="cond">no (bought item)</span>procurement &#8594; receipt &#8594; then pick</div></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>Quick check + packaging</b></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>Dispatch — deliver or pickup</b></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>Costing — material + logistics only</b><span class="vs">no shop floor, no OEE</span></div></div></div>
+<div class="diagram"><p class="cap">Flow C — Custom part in the turning workshop</p><div class="vflow"><div class="vn b-gray"><b>Sales — custom order</b><span class="vs">sample or drawing; the SKU may not exist yet</span></div><div class="varrow">&#8595;</div><div class="vn b-turn"><b>Engineering assesses the sample</b><span class="vs">creates SKU + drawing (Rev 1) + turning route</span></div><div class="varrow">&#8595;</div><div class="vn b-turn"><b>Manual turning (Jeedimetla)</b><span class="vs">operator turns to drawing · measured by utilisation, not OEE</span></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>Quality — dimensions vs the drawing</b></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Decision · feeds a hose assembly?</b></div><div class="vbranch"><div class="vopt"><span class="cond">yes</span>to Ranigunj &#8594; assemble &#8594; test</div><div class="vopt"><span class="cond">no</span>packaging</div></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>Dispatch · costing (high margin)</b></div></div></div>
+<div class="diagram"><p class="cap">Flow D — Cross-site with an internal requisition (pharma / PTFE)</p><div class="vflow"><div class="vn b-gray"><b>Sales files order</b><span class="vs">PTFE, SS316 flange / flange</span></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>Hose at Ranigunj (or procure)</b><span class="vs">cut to length with flaring allowance</span></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Hose team raises an INTERNAL REQUISITION to the office</b><span class="vs">flanges + extra hose</span></div><div class="vbranch"><div class="vopt"><span class="cond">office resolves</span>stock issue or purchase order</div></div><div class="varrow">&#8595;</div><div class="vn b-pharma"><b>Transfer to Jeedimetla — turn parts + flaring</b></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>Quality inspection</b></div><div class="varrow">&#8595;</div><div class="vn b-hose"><b>Transfer back to Ranigunj — crimp</b></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>Pressure test &#8594; certificate &#8594; pack</b></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>Dispatch · costing (multi-site)</b></div></div></div>
+
+<h3>The operator's view (setup only at a changeover)</h3>
+<p>A machine keeps running its job until it's done or the job changes. Setup and first-article happen only at a <b>changeover</b> — not every day. Clock-in is just attendance for costing.</p>
+<div class="diagram"><p class="cap">One operator, one job</p><div class="vflow"><div class="vn b-cnc"><b>Job on the machine</b></div><div class="varrow">&#8595;</div><div class="vn dec"><b>Same job, or a changeover?</b></div><div class="vbranch"><div class="vopt"><span class="cond">continues (common)</span>run production — counts auto from the setup record</div><div class="vopt"><span class="cond">changeover</span>job card + material &#8594; set up &#8594; first piece &#8594; first-article gate &#8594; run</div></div><div class="varrow">&#8595;</div><div class="vn dec"><b>During the run, log events</b></div><div class="vbranch"><div class="vopt"><span class="cond">stoppage</span>downtime + reason + dept</div><div class="vopt"><span class="cond">reject</span>reject + reason + dept</div><div class="vopt"><span class="cond">tool breaks / wears</span>tool event — charged to the job</div></div><div class="varrow">&#8595;</div><div class="vn b-cnc"><b>Batch complete — lot created</b><span class="vs">machine to next job / idle · timeline continuous · OEE derived, never typed</span></div></div></div>
+
+<!-- ================= DAY ================= -->
+<h2 id="day">8 · A production day</h2>
+<p>One shift, two batches, across the machine fleet. OEE only settles at set moments — never mid-batch.</p>
+<div class="diagram"><p class="cap">The rhythm of a day</p><div class="vflow"><div class="vn b-gray"><b>Before shift — Planning loads the machines</b><span class="vs">by delivery date + priority · job cards issued</span></div><div class="varrow">&#8595;</div><div class="vn b-gray"><b>09:00 start — operators clock in</b><span class="vs">timelines continuous across days</span></div><div class="varrow">&#8595;</div><div class="vn b-cnc"><b>Batch 1 · 09:00&#8211;13:15</b><span class="vs">setup only if a job changes · live Availability only, not full OEE</span></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>13:15 — Batch 1 closes · its OEE freezes</b></div><div class="varrow">&#8595;</div><div class="vn b-cnc"><b>14:00 — Batch 2 · same pattern until 17:00</b></div><div class="varrow">&#8595;</div><div class="vn b-gate"><b>17:00 end of day — full-day OEE computed</b><span class="vs">from the machine timeline (A &#215; P &#215; Q)</span></div><div class="varrow">&#8595;</div><div class="vn b-cost"><b>Sellable counts roll to orders · dashboards refresh</b></div></div></div>
+<p class="mini">Running underneath, all day: stores issuing material, quality patrols, transfers to Ranigunj, hose cutting/crimping/testing, maintenance, the tool room, dispatch, and the live order board.</p>
+
+
+
+<!-- ================= DETAIL ================= -->
+<h2 id="detail">9 · Detail layer — the registers</h2>
+<p>Open these only when reviewing how the BRAIN is wired.</p>
+
+<details><summary>The four pillars &amp; their supporting registers</summary><div class="reg">
+<ul>
+<li><code>location</code> — sites, stores, bins (self-nesting).</li>
+<li><code>party</code> — customers &amp; suppliers (roles); cash party.</li>
+<li><code>item</code> + <code>item_category</code> (consumable / maintenance-spare / component / packaging / …) + <code>item_attribute</code> — one item register; rubber/pharma and all properties are attributes; flags: <code>recurring</code> (saved assemblies), <code>reorder_point</code> + <code>reorder_qty</code>, <code>procurement_mode</code> (bulk vs in-app), <code>critical</code> (triggers the second QC authorisation), and a <code>validation_stamp</code> ("Developed" + approved design file).</li>
+<li><code>work_center</code> / <code>unit</code> — CNC / turning / HOSE Unit 1 / HOSE Unit 2, each with its measure (OEE / utilisation / yield).</li>
+<li><code>machine_station</code> — capability, size-range, tools/consumables it uses; scheduling binds to the capability.</li>
+<li><code>department</code>, <code>job_position</code> (the "position" concept — renamed to dodge a MySQL reserved word), <code>employee</code>, <code>employee_position</code> (an employee may hold several positions), <code>app_user</code>, <code>role</code> + <code>position_role</code> (position drives roles — WD-03), <code>cost_center</code>, <code>unit_of_measure</code>, <code>lot</code>.</li>
+</ul></div></details>
+
+<details><summary>Product, process &amp; stations</summary><div class="reg">
+<ul>
+<li><code>bom</code> + <code>bom_component</code> (multi-level; allowance factor; per-end configuration).</li>
+<li><code>routing</code> + <code>routing_step</code> — each step typed <b>station / gate / requirement / outsourced</b>; binds to a capability; carries tools and standard times.</li>
+<li><code>drawing</code> (revision).</li>
+<li><code>lot_link</code> — the family-tree edges (parent/child).</li>
+<li><code>validation_record</code> — the "Developed" stamp on an item: approved prototype design file + who validated + when (minor revisions still allowed via revisions).</li>
+</ul></div></details>
+
+<details><summary>Documents &amp; fulfilment</summary><div class="reg">
+<ul>
+<li><code>order_header</code> — filed by any authorised user; customer PO &amp; drawings attached.</li>
+<li><code>order_line</code> — item (optional), customer wording, spec, as-documented vs as-built, committed date, priority, status.</li>
+<li><code>order_line_component</code> — source &amp; make-or-buy per part, per end.</li>
+<li><code>order_line_addon</code> — SKUs + operation + disposition (integrated / companion, ships-with).</li>
+<li><code>internal_requisition</code> — department-to-department material request.</li>
+<li><code>purchase_order</code>, <code>goods_receipt</code>, <code>stock_movement</code> (append-only, hash-chained), <code>stock_on_hand</code>, <code>replenishment_list</code> (LOW / NO STOCK worklist), <code>work_order</code>, <code>dispatch</code>.</li>
+</ul></div></details>
+
+<details><summary>Approvals, manufacturing, costing, shared services</summary><div class="reg">
+<ul>
+<li><b>Approvals:</b> <code>approval_rule</code>, <code>approval_step</code>, <code>approval_request</code>, <code>approval_action</code> — non-blocking by default.</li>
+<li><b>Machining:</b> <code>machine_state_change</code> (the gapless timeline OEE is derived from), <code>schedule_operation</code>, <code>production_entry</code>, <code>reject_record</code>, <code>first_article_approval</code>, <code>pressure_leak_test</code>, <code>override_record</code>.</li>
+<li><b>Costing:</b> <code>cost_component_type</code>, <code>cost_basis</code>, <code>cost_rate</code>, <code>machine_direct_pool</code>, <code>overhead_pool</code>, <code>salvage_rate</code>, <code>tooling</code>, <code>inventory_variance</code>, <code>cost_run</code>.</li>
+<li><b>Shared:</b> <code>reason_code</code>, <code>audit_event</code>, <code>attachment</code>, <code>comment</code>, <code>activity_event</code>, <code>notification</code>, <code>document_vault</code> (access-controlled, versioned, access-audited, encrypted — for designs, cost sheets, dev sheets).</li>
+</ul></div></details>
+
+<!-- ================= SCOPE ================= -->
+<h2 id="scope">10 · Scope &amp; build order</h2>
+<p><b>Deliberately out:</b> invoicing, receivables/payables, ledgers, tax; payroll (attendance stays, for cost only). <b>Seams left open:</b> multi-site (already core), a customer-portal boundary, the full R&amp;D workspace, and standard-cost analysis later. The <b>confidential document vault</b> (role-scoped, audited, encrypted) is in the foundation now.</p>
+<p><b>Build &amp; upload order — one register at a time, verified live, then the next:</b></p>
+<div class="reg"><ul>
+<li><b>Wave 0</b> — locations, departments, cost centres, work centres/units, positions, roles.</li>
+<li><b>Wave 1</b> — employees, users, machines/stations (with capabilities &amp; consumables).</li>
+<li><b>Wave 2</b> — units, categories (consumable / component / packaging / …), attributes, reorder + procurement flags → item register → party register.</li>
+<li><b>Wave 3</b> — BOMs, <b>process templates</b> (typed steps bound to stations), drawings.</li>
+<li><b>Wave 3.5</b> — cost setup: bases, rates, pools, salvage, tooling.</li>
+<li><b>Wave 4</b> — opening stock by item / lot / location.</li>
+<li><b>Wave 5+</b> — orders, add-ons, requisitions, two-track procurement, work orders, quality, transfers, dispatch, cost runs, approvals, the confidential document vault — then remaining departments (incl. R&amp;D workspace) as screens.</li>
+</ul></div>
+
+<!-- ================= CHANGE CONTROL ================= -->
+<h2 id="change">11 · How to change the BRAIN</h2>
+<p>Locking does not freeze the BRAIN — it puts it under <b>change control</b>. You can always add to it; the lock means changes happen <b>deliberately and on the record</b>, never by accident. This section is written for people <b>and</b> for Claude / Claude Code, so every change follows the same safe path.</p>
+
+<h3>Three sizes of change</h3>
+<table class="matrix"><thead><tr><th>Size</th><th>Examples</th><th>Risk</th><th>What to do</th></tr></thead><tbody>
+<tr><td><b>Add data</b> (99% of use)</td><td>a new hose, fitting, customer, add-on, or a process built from existing stations</td><td>None — it's just <i>using</i> the BRAIN</td><td>Just enter it. Nothing structural moves.</td></tr>
+<tr><td><b>Add a capability</b></td><td>a new item category, station capability, attribute, report, or screen</td><td>Low — additive by design</td><td>Add alongside the existing; old data keeps working.</td></tr>
+<tr><td><b>Change a Neuron / rule</b></td><td>a new costing rule, a department restructure, a new invariant</td><td>Real — can ripple</td><td>The five-step process below.</td></tr>
+</tbody></table>
+
+<h3>The five-step process for a Neuron or rule change</h3>
+<div class="reg"><ol>
+<li><b>Propose it in this document</b> — what changes, and why.</li>
+<li><b>Trace the ripple</b> — which registers, workflows, and other Neurons it touches.</li>
+<li><b>Bump the version</b> — add a revision-history line; the old version is never erased (N-07 applied to the BRAIN itself).</li>
+<li><b>Migrate, don't rebuild</b> — add tables / columns / rows; never tear down what is loaded and running.</li>
+<li><b>Pass the gate</b> — the automated test suite (the reborn runAudit) must pass before the change ships.</li>
+</ol></div>
+
+<div class="callout">
+<h3>Rules for Claude &amp; Claude Code — must follow</h3>
+<div class="reg"><ul>
+<li><b>Never change a locked Neuron without explicit human approval</b>, recorded as a revision-history line here.</li>
+<li><b>Update this document first, then implement</b> — code follows the BRAIN, never the other way round.</li>
+<li><b>Additive, never destructive</b> — only add structures and data; never DROP or rebuild an existing table/column, or delete live data, to satisfy a change. Migrate forward.</li>
+<li><b>Versioned everything</b> — never overwrite a design, process, or BOM revision; create a new revision.</li>
+<li><b>The stock ledger is immutable</b> — never UPDATE or DELETE a <code>stock_movement</code> row; corrections are new, offsetting entries.</li>
+<li><b>The test suite is the release gate</b> — nothing commits unless runAudit passes.</li>
+</ul></div>
+</div>
+
+<h3>Revision history</h3>
+<table class="matrix"><thead><tr><th>Version</th><th>Change</th></tr></thead><tbody>
+<tr><td><b>v1.0</b> (locked)</td><td>Whole-business architecture: 12 Neurons, 11 Cost Neurons, the process &amp; station model, inventory &amp; two-track procurement, the confidential document vault, and this change-control governance.</td></tr>
+<tr><td><b>v1.1</b> (locked)</td><td>Recorded the Wave 0 rename <code>position</code> &#8594; <code>job_position</code>; added the <code>engineer</code> and <code>store</code> roles; added the <code>critical</code> item flag and the critical-part <b>second QC authorisation</b> rule; confirmed there is no <i>security</i> role (the Security seat used viewer and has been removed from the org). All changes additive — no prior step disrupted; Wave 0 (live) untouched.</td></tr>
+</tbody></table>
+
+<div class="rule"></div>
+<p class="mini">THE BRAIN — v1.1 (LOCKED). This is the controlled reference the database and code are built to match. Changes follow Section 11. Wave 0 is live; next is Wave 1 — people, machines, and stations.</p>
+
+</main>
+</body>
+</html>
