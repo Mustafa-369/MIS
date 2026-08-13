@@ -1,38 +1,30 @@
-import { useEffect, useState } from 'react'
-import { fetchLocations } from './features/foundation/foundationApi.js'
+import { useState } from 'react'
+import { getToken, clearToken } from './features/auth/authApi.js'
+import LoginPage from './features/auth/LoginPage.jsx'
+import ChangePasswordPage from './features/auth/ChangePasswordPage.jsx'
+import HomePage from './features/auth/HomePage.jsx'
 
 export default function App() {
-  const [locations, setLocations] = useState(null)
-  const [error, setError] = useState(null)
+  const [page, setPage] = useState(() => (getToken() ? 'home' : 'login'))
 
-  useEffect(() => {
-    fetchLocations()
-      .then(setLocations)
-      .catch((err) => setError(err.message))
-  }, [])
+  function handleLoggedIn(mustChangePassword) {
+    setPage(mustChangePassword ? 'change-password' : 'home')
+  }
 
-  return (
-    <main className="container">
-      <h1>AOP — Foundation</h1>
+  function handlePasswordChanged() {
+    setPage('home')
+  }
 
-      {!locations && !error && <p>Loading locations…</p>}
+  function handleInvalidToken() {
+    clearToken()
+    setPage('login')
+  }
 
-      {error && (
-        <div className="error-box">
-          <strong>Something went wrong</strong>
-          <p>{error}</p>
-        </div>
-      )}
-
-      {locations && (
-        <ul className="location-list">
-          {locations.map((loc) => (
-            <li key={loc.id}>
-              <strong>{loc.code}</strong> — {loc.name} ({loc.kind})
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
-  )
+  if (page === 'change-password') {
+    return <ChangePasswordPage onChanged={handlePasswordChanged} />
+  }
+  if (page === 'home') {
+    return <HomePage onInvalidToken={handleInvalidToken} />
+  }
+  return <LoginPage onLoggedIn={handleLoggedIn} />
 }
