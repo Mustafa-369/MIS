@@ -1,0 +1,572 @@
+{
+  "fixture": "runAudit · Wave 2 · item import",
+  "import_rules": {
+    "category": "fitting (all 11)",
+    "base_uom": "pc  (fitting category default — discrete pieces)",
+    "status": "active  (imported items are live catalogue, not drafts)",
+    "material": "null  (not in the code-string; human-completed later)",
+    "code": "preserved verbatim (never normalised, never parsed)",
+    "name": "the original description text, trimmed",
+    "flags": "schema defaults — is_stockable=1, is_purchasable=1, is_sellable=0, is_manufacturable=0, critical=0",
+    "procurement_mode": "in_app (default)",
+    "body_attributes": "only fitting_type is decodable from the string -> one item_attribute_value per item, stored as value_option_id (never value_text)",
+    "ends": "one item_end row per physical port; standard decides size_basis",
+    "unstated_scalars": "pressure_rating, plating, seal_material, unit_weight, make, origin, gender(where not stated), material -> NOT created / null"
+  },
+  "items": [
+    {
+      "code": "WA06L",
+      "desc": "Straight Coupling [ Straight - Union ] - 6L [ M12 x 1.5 ]",
+      "fitting_type": "Straight Coupling",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "6L",
+          "size_basis": "tube_od_mm_series",
+          "thread": "M12x1.5",
+          "gender": null,
+          "seal_type": "24_cone",
+          "note": null
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "din_metric_dko",
+          "size_value": "6L",
+          "size_basis": "tube_od_mm_series",
+          "thread": "M12x1.5",
+          "gender": null,
+          "seal_type": "24_cone",
+          "note": null
+        }
+      ],
+      "why": "Tube-to-tube union: two identical 6L DIN ends, 24° cone seal, M12x1.5 nut thread.",
+      "expected_item": {
+        "code": "WA06L",
+        "name": "Straight Coupling [ Straight - Union ] - 6L [ M12 x 1.5 ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Straight Coupling"
+        }
+      ]
+    },
+    {
+      "code": "WD06L",
+      "desc": "Bulkhead Connector [ With 24° Taper ] - 6L [ M12 x 1.5 ]",
+      "fitting_type": "Bulkhead Connector",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "6L",
+          "size_basis": "tube_od_mm_series",
+          "thread": "M12x1.5",
+          "gender": null,
+          "seal_type": "24_cone",
+          "note": null
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "din_metric_dko",
+          "size_value": "6L",
+          "size_basis": "tube_od_mm_series",
+          "thread": "M12x1.5",
+          "gender": null,
+          "seal_type": "24_cone",
+          "note": null
+        }
+      ],
+      "why": "Panel pass-through: two 6L DIN ends, 24° cone seal.",
+      "expected_item": {
+        "code": "WD06L",
+        "name": "Bulkhead Connector [ With 24° Taper ] - 6L [ M12 x 1.5 ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Bulkhead Connector"
+        }
+      ]
+    },
+    {
+      "code": "WF35L-24",
+      "desc": "Male Stud Coupling [ Straight Stud Fittings ] - 35L X G1-1/2\"",
+      "fitting_type": "Male Stud Coupling",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "35L",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "tube end; nut thread not in string"
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "bspp",
+          "size_value": "G1-1/2",
+          "size_basis": "nominal_inch",
+          "thread": "G1-1/2",
+          "gender": "male",
+          "seal_type": null,
+          "note": null
+        }
+      ],
+      "why": "THE cross-standard case: End A DIN 35L tube, End B BSPP G1-1/2 male stud. Proves two standards on one body.",
+      "expected_item": {
+        "code": "WF35L-24",
+        "name": "Male Stud Coupling [ Straight Stud Fittings ] - 35L X G1-1/2\"",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Male Stud Coupling"
+        }
+      ]
+    },
+    {
+      "code": "WF20S-16",
+      "desc": "Male Stud Coupling [ Straight Stud Fittings ] - 20S X G1\"",
+      "fitting_type": "Male Stud Coupling",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "20S",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "heavy series"
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "bspp",
+          "size_value": "G1",
+          "size_basis": "nominal_inch",
+          "thread": "G1",
+          "gender": "male",
+          "seal_type": null,
+          "note": null
+        }
+      ],
+      "why": "DIN heavy (S) series + BSPP male stud.",
+      "expected_item": {
+        "code": "WF20S-16",
+        "name": "Male Stud Coupling [ Straight Stud Fittings ] - 20S X G1\"",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Male Stud Coupling"
+        }
+      ]
+    },
+    {
+      "code": "WG06S-2",
+      "desc": "Male Stud Coupling [ED] [ Straight Stud Fittings ] - 6S X G1/8\"",
+      "fitting_type": "Male Stud Coupling",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "6S",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": null
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "bspp",
+          "size_value": "G1/8",
+          "size_basis": "nominal_inch",
+          "thread": "G1/8",
+          "gender": "male",
+          "seal_type": "ed_oring",
+          "note": "ED soft seal on the stud end"
+        }
+      ],
+      "why": "ED (elastomer O-ring) seal lands on the BSP stud end, not the DIN end.",
+      "expected_item": {
+        "code": "WG06S-2",
+        "name": "Male Stud Coupling [ED] [ Straight Stud Fittings ] - 6S X G1/8\"",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Male Stud Coupling"
+        }
+      ]
+    },
+    {
+      "code": "WJ22L-12",
+      "desc": "Male Stud Branch Tee - 22L X R3/4\"",
+      "fitting_type": "Male Stud Branch Tee",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "22L",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "run end"
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "din_metric_dko",
+          "size_value": "22L",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "run end"
+        },
+        {
+          "end_seq": 3,
+          "connection_standard": "bspt",
+          "size_value": "R3/4",
+          "size_basis": "nominal_inch",
+          "thread": "R3/4",
+          "gender": "male",
+          "seal_type": null,
+          "note": "branch stud"
+        }
+      ],
+      "why": "THREE ends (run 22L + 22L, branch R3/4). Proves +end. R = BSPT, kept SEPARATE from NPT.",
+      "expected_item": {
+        "code": "WJ22L-12",
+        "name": "Male Stud Branch Tee - 22L X R3/4\"",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Male Stud Branch Tee"
+        }
+      ]
+    },
+    {
+      "code": "NT25S",
+      "desc": "Metric Nut - 25S [ M36 x 2.0 ]",
+      "fitting_type": "Metric Nut",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "25S",
+          "size_basis": "tube_od_mm_series",
+          "thread": "M36x2.0",
+          "gender": "female",
+          "seal_type": null,
+          "note": null
+        }
+      ],
+      "why": "Single end. A nut is internally threaded -> gender female.",
+      "expected_item": {
+        "code": "NT25S",
+        "name": "Metric Nut - 25S [ M36 x 2.0 ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Metric Nut"
+        }
+      ]
+    },
+    {
+      "code": "FL10",
+      "desc": "Ferrule - 10",
+      "fitting_type": "Ferrule",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "din_metric_dko",
+          "size_value": "10",
+          "size_basis": "tube_od_mm_series",
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "series (L/S) not in string -> flag for completion"
+        }
+      ],
+      "why": "Minimal end: size only, no thread/gender/seal. Series unknown -> data-quality flag, not an invention.",
+      "expected_item": {
+        "code": "FL10",
+        "name": "Ferrule - 10",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Ferrule"
+        }
+      ]
+    },
+    {
+      "code": "O-1106-06",
+      "desc": "Straight Connector - Hose Adapter [ G3/8\" X G3/8\" ]",
+      "fitting_type": "Hose Adapter",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "bspp",
+          "size_value": "G3/8",
+          "size_basis": "nominal_inch",
+          "thread": "G3/8",
+          "gender": null,
+          "seal_type": null,
+          "note": null
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "bspp",
+          "size_value": "G3/8",
+          "size_basis": "nominal_inch",
+          "thread": "G3/8",
+          "gender": null,
+          "seal_type": null,
+          "note": null
+        }
+      ],
+      "why": "All-BSP two-end adapter (no DIN). Gender not stated -> null.",
+      "expected_item": {
+        "code": "O-1106-06",
+        "name": "Straight Connector - Hose Adapter [ G3/8\" X G3/8\" ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Hose Adapter"
+        }
+      ]
+    },
+    {
+      "code": "O-1108-04",
+      "desc": "Straight Connector - Hose Adapter [ G1/2\" X G1/4\" ]",
+      "fitting_type": "Hose Adapter",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "bspp",
+          "size_value": "G1/2",
+          "size_basis": "nominal_inch",
+          "thread": "G1/2",
+          "gender": null,
+          "seal_type": null,
+          "note": null
+        },
+        {
+          "end_seq": 2,
+          "connection_standard": "bspp",
+          "size_value": "G1/4",
+          "size_basis": "nominal_inch",
+          "thread": "G1/4",
+          "gender": null,
+          "seal_type": null,
+          "note": null
+        }
+      ],
+      "why": "Unequal two-end BSP adapter (G1/2 x G1/4).",
+      "expected_item": {
+        "code": "O-1108-04",
+        "name": "Straight Connector - Hose Adapter [ G1/2\" X G1/4\" ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Hose Adapter"
+        }
+      ]
+    },
+    {
+      "code": "VSTI-24",
+      "desc": "Allen Key Sealing Plug - ED [ G1-1/2\" ]",
+      "fitting_type": "Sealing Plug",
+      "ends": [
+        {
+          "end_seq": 1,
+          "connection_standard": "bspp",
+          "size_value": "G1-1/2",
+          "size_basis": "nominal_inch",
+          "thread": "G1-1/2",
+          "gender": "male",
+          "seal_type": "ed_oring",
+          "note": null
+        }
+      ],
+      "why": "Single male BSP end, ED seal. 'Allen key' = internal-hex drive -> item.notes, not an end.",
+      "expected_item": {
+        "code": "VSTI-24",
+        "name": "Allen Key Sealing Plug - ED [ G1-1/2\" ]",
+        "category": "fitting",
+        "material": null,
+        "base_uom": "pc",
+        "status": "active",
+        "is_stockable": 1,
+        "is_purchasable": 1,
+        "is_sellable": 0,
+        "is_manufacturable": 0,
+        "critical": 0,
+        "procurement_mode": "in_app"
+      },
+      "expected_attributes": [
+        {
+          "attribute": "fitting_type",
+          "stored_as": "value_option_id",
+          "value_option": "Sealing Plug"
+        }
+      ]
+    }
+  ],
+  "aggregate_assertions": {
+    "item_rows": 11,
+    "all_category": "fitting",
+    "item_end_rows": 20,
+    "item_attribute_value_rows": 11,
+    "ends_by_standard": {
+      "din_metric_dko": 11,
+      "bspp": 8,
+      "bspt": 1
+    },
+    "gender_male_ends": 5,
+    "gender_female_ends": 1,
+    "seal_24_cone_ends": 4,
+    "seal_ed_oring_ends": 2
+  },
+  "negative_assertions": [
+    "No dash size ever lands on a DIN end (size_basis for din_metric_dko is ALWAYS tube_od_mm_series).",
+    "BSPT (R3/4 on WJ22L-12) is stored as connection_standard='bspt', NEVER 'npt' and NEVER merged.",
+    "fitting_type is stored in value_option_id, NEVER in value_text (typed-slot rule; guards coercion hazard).",
+    "WF35L-24 yields exactly 2 ends and WJ22L-12 exactly 3 — no end is dropped (guards silent-drop).",
+    "Codes are byte-for-byte preserved: 'WF35L-24' stays 'WF35L-24' (no case-fold, no re-generation).",
+    "No item gets a material, pressure_rating, plating, gender(unstated), etc. that wasn't in its string."
+  ],
+  "autocode_test": {
+    "purpose": "Prove auto-generation + editability (D14) for un-coded rows (none of the 11 are un-coded).",
+    "input": {
+      "code": "",
+      "description": "Sealing Plug - ED [ G1/4\" ]"
+    },
+    "assert": [
+      "A non-empty code is generated and is UNIQUE against all existing codes.",
+      "The generated code is subsequently editable (update to a new unique value succeeds).",
+      "The item still imports with 1 BSPP end (G1/4, male, ed_oring) and fitting_type=Sealing Plug."
+    ]
+  }
+}
