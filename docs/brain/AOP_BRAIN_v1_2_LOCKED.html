@@ -103,7 +103,7 @@ details .reg{font-size:14.5px}
   <h1>THE&nbsp;BRAIN</h1>
   <p class="sub">The thinking core of the Aaliqadr Operations Platform</p>
   <div class="meta">
-    <span class="chip">v1.1 · LOCKED</span>
+    <span class="chip">v1.2 · LOCKED</span>
     <span class="chip">Status: LOCKED — the controlled reference</span>
     <span class="chip">Jeedimetla · Ranigunj</span>
     <span class="chip">Inventory · procurement · confidential vault</span>
@@ -116,7 +116,7 @@ details .reg{font-size:14.5px}
 <p class="lead">This document explains the thinking core of your platform — the decisions that never change, so everything built on top can change freely. It is written to be <b>seen</b>: a big picture first, worked examples for every decision, flowcharts for every workflow, and a detail layer underneath for review.</p>
 
 <div class="legend">
-  <b>What changed in v6.</b> Added a full <b>Inventory &amp; procurement</b> section (Section&nbsp;5) — the <b>buildable view</b> (search a 12L connector, see what's in stock <i>and</i> what's buildable from parts), the <b>four kinds of "spare"</b> kept separate, and <b>two-track procurement</b> (replenishment vs in-app). Corrected the <b>"Developed" stamp</b> (it lives on the SKU, not before it). Clarified <b>part vs assembly SKUs</b>, added the <b>confidential document vault</b>, and noted operators tend <b>several jobs</b>. Neuron / Cost-Neuron numbers unchanged.
+  <b>What changed in v1.2.</b> Built the <b>Wave 2 item register</b> and recorded its ratified design (decisions D1&#8211;D14). The flat item-attribute idea is replaced by a <b>typed attribute engine</b> (definition &middot; controlled options &middot; per-category template &middot; typed value slots). Fittings gain a <b>per-end model</b> — each end carries its own connection <b>standard</b>, size, thread, gender and seal — over <b>six locked standards</b> (DIN-metric&nbsp;DKO, BSPP, BSPT, JIC, ORFS, NPT), with <b>BSPT and NPT kept separate</b>. <b>Material</b> becomes a first-class register (cost per grade); <b>reorder policy</b> is grained per (item, location). Neuron / Cost-Neuron numbers unchanged.
   <div style="margin-top:12px">
     <b>Category tags:</b>
     <span class="tag t-cnc">CNC fittings</span>
@@ -491,7 +491,13 @@ details .reg{font-size:14.5px}
 <ul>
 <li><code>location</code> — sites, stores, bins (self-nesting).</li>
 <li><code>party</code> — customers &amp; suppliers (roles); cash party.</li>
-<li><code>item</code> + <code>item_category</code> (consumable / maintenance-spare / component / packaging / …) + <code>item_attribute</code> — one item register; rubber/pharma and all properties are attributes; flags: <code>recurring</code> (saved assemblies), <code>reorder_point</code> + <code>reorder_qty</code>, <code>procurement_mode</code> (bulk vs in-app), <code>critical</code> (triggers the second QC authorisation), and a <code>validation_stamp</code> ("Developed" + approved design file).</li>
+<li><code>item</code> &mdash; one master row. Nature is <b>capability flags</b> (<code>is_stockable</code> / <code>is_purchasable</code> / <code>is_sellable</code> / <code>is_manufacturable</code>; "assembly" simply means <code>is_manufacturable</code>), not a rigid type. Also: <code>critical</code> (triggers the second QC authorisation), lifecycle <code>status</code> (draft / active / obsolete) separate from <code>is_active</code>, an <b>auto-generated, editable</b> <code>code</code> (never parsed in logic), <code>hsn_code</code> (identity, not tax), <code>procurement_mode</code> (bulk vs in-app), and <code>design_file_ref</code> (vault seam). Custom one-offs are <b>not</b> items (order lines only); a repeating custom part becomes an item via <code>recurring</code>. Base/stock/cost UoM with a per-item purchase conversion (bar bought in lengths, stocked &amp; costed in <b>kg</b>).</li>
+<li><code>item_category</code> &mdash; the eight buckets: raw material &middot; fitting &middot; hose &middot; finished assembly &middot; consumable &middot; maintenance spare &middot; packaging &middot; tooling. Category drives the attribute template.</li>
+<li><b>Attribute engine</b> (typed registry &mdash; replaces flat <code>item_attribute</code>): <code>attribute_definition</code> (code / data-type / uom / validation), <code>attribute_option</code> (controlled lists &mdash; kills enumeration drift), <code>category_attribute</code> (the per-category template = the grid&#8217;s columns), <code>item_attribute_value</code> (typed slots <code>value_num</code> / <code>value_text</code> / <code>value_bool</code> / <code>value_option_id</code> &mdash; kills the coercion hazard).</li>
+<li><code>item_end</code> &mdash; the <b>per-end model</b>. Each end carries its own <code>connection_standard</code>, size, thread, gender and seal, so cross-standard fittings are first-class. Six standards: <b>DIN-metric (DKO)</b>, <b>BSPP&nbsp;(G)</b>, <b>BSPT&nbsp;(R)</b>, <b>JIC</b>, <b>ORFS</b>, <b>NPT</b> &mdash; BSPT (55&deg;) and NPT (60&deg;) kept <b>deliberately separate</b> (they never seal against each other). SAE flange handled as a traded item.</li>
+<li><code>material</code> &mdash; a <b>first-class register</b> (grade, standard, density, salvage), because cost is per grade (SS304 &ne; SS316 &ne; MS) and salvage is per material.</li>
+<li><code>item_location</code> &mdash; presence <b>and</b> reorder policy per (item, location): <code>reorder_point</code> / <code>reorder_qty</code> live here, not on the item, because the two sites replenish independently.</li>
+<li><code>item_alias</code> &mdash; the customer / vendor names that resolve back to one canonical item.</li>
 <li><code>work_center</code> / <code>unit</code> — CNC / turning / HOSE Unit 1 / HOSE Unit 2, each with its measure (OEE / utilisation / yield).</li>
 <li><code>machine_station</code> — capability, size-range, tools/consumables it uses; scheduling binds to the capability.</li>
 <li><code>department</code>, <code>job_position</code> (the "position" concept — renamed to dodge a MySQL reserved word), <code>employee</code>, <code>employee_position</code> (an employee may hold several positions), <code>app_user</code>, <code>role</code> + <code>position_role</code> (position drives roles — WD-03), <code>cost_center</code>, <code>unit_of_measure</code>, <code>lot</code>.</li>
@@ -531,7 +537,7 @@ details .reg{font-size:14.5px}
 <div class="reg"><ul>
 <li><b>Wave 0</b> — locations, departments, cost centres, work centres/units, positions, roles.</li>
 <li><b>Wave 1</b> — employees, users, machines/stations (with capabilities &amp; consumables).</li>
-<li><b>Wave 2</b> — units, categories (consumable / component / packaging / …), attributes, reorder + procurement flags → item register → party register.</li>
+<li><b>Wave 2</b> &mdash; units, materials, categories, the typed attribute engine, the per-end fitting model, item-location reorder policy &#8594; <b>item register (built &amp; merged, v1.2)</b>; <b>party register next</b>.</li>
 <li><b>Wave 3</b> — BOMs, <b>process templates</b> (typed steps bound to stations), drawings.</li>
 <li><b>Wave 3.5</b> — cost setup: bases, rates, pools, salvage, tooling.</li>
 <li><b>Wave 4</b> — opening stock by item / lot / location.</li>
@@ -574,10 +580,11 @@ details .reg{font-size:14.5px}
 <table class="matrix"><thead><tr><th>Version</th><th>Change</th></tr></thead><tbody>
 <tr><td><b>v1.0</b> (locked)</td><td>Whole-business architecture: 12 Neurons, 11 Cost Neurons, the process &amp; station model, inventory &amp; two-track procurement, the confidential document vault, and this change-control governance.</td></tr>
 <tr><td><b>v1.1</b> (locked)</td><td>Recorded the Wave 0 rename <code>position</code> &#8594; <code>job_position</code>; added the <code>engineer</code> and <code>store</code> roles; added the <code>critical</code> item flag and the critical-part <b>second QC authorisation</b> rule; confirmed there is no <i>security</i> role (the Security seat used viewer and has been removed from the org). All changes additive — no prior step disrupted; Wave 0 (live) untouched.</td></tr>
+<tr><td><b>v1.2</b> (locked)</td><td>Built the <b>Wave 2 item register</b> and recorded its ratified design (decisions D1&#8211;D14). Replaced the flat <code>item_attribute</code> idea with a <b>typed attribute engine</b> (<code>attribute_definition</code>, <code>attribute_option</code>, <code>category_attribute</code>, <code>item_attribute_value</code>), removing the coercion hazard and enumeration drift at the schema level. Introduced the <b>per-end fitting model</b> (<code>item_end</code>): each end owns its connection standard, size, thread, gender and seal, making cross-standard fittings first-class; locked six standards &mdash; DIN-metric&nbsp;(DKO), BSPP&nbsp;(G), BSPT&nbsp;(R), JIC, ORFS, NPT &mdash; with <b>BSPT and NPT kept separate</b> (55&deg; vs 60&deg; taper never mate). Promoted <b>material</b> to a first-class register (grade + density + salvage) for cost-per-grade. Grained <b>reorder policy</b> to per (item, location) via <code>item_location</code>; added <code>item_alias</code>. Confirmed nature as <b>capability flags</b> rather than a rigid type; <b>auto-generated, editable, never-parsed</b> item codes; custom one-offs excluded from the register (order lines only), <code>recurring</code> the only custom&#8594;item path; base/stock/cost in <b>kg</b> for bar with per-item purchase conversion. Clarified <b>buildable</b> (components only) vs <b>dispatch-ready</b> (adds packaging); protective caps are Packaging, functional caps are Fittings. All additive &mdash; Waves 0 / 1 / 1.5 (live) untouched; migration <code>0003_item_register</code> applied on real MySQL&nbsp;8.0.46 and merged with <b>runAudit green (63/63)</b>.</td></tr>
 </tbody></table>
 
 <div class="rule"></div>
-<p class="mini">THE BRAIN — v1.1 (LOCKED). This is the controlled reference the database and code are built to match. Changes follow Section 11. Wave 0 is live; next is Wave 1 — people, machines, and stations.</p>
+<p class="mini">THE BRAIN — v1.2 (LOCKED). This is the controlled reference the database and code are built to match. Changes follow Section 11. Waves 0 / 1 / 1.5 are live and the Wave 2 item register is merged; next is the party register.</p>
 
 </main>
 </body>
