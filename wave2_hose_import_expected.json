@@ -1,0 +1,672 @@
+{
+  "fixture": "runAudit · Wave 2 · hose + end-fitting import",
+  "import_rules": {
+    "hose_category": "category=hose · base_uom=metre · one item row, NO item_end (raw hose isn't terminated)",
+    "endfitting_category": "category=fitting · base_uom=pc · two item_end rows (one hose end + one connection end)",
+    "code": "existing supplier code kept verbatim; blank code -> auto-generated + editable (D14)",
+    "material": "resolved to the material register where the string names it (SS304/SS316/PTFE/Rubber); else null",
+    "bore": "stored as the canonical DASH number (value_num); size_reference maps dash->inch for display (R2)",
+    "family_is_pressure": "hose_family carries the rubber pressure class: R1/R2=braided, 4SP/4SH=spiral (R1 rule). No pressure field on the fitting.",
+    "honest_decode": "only what the string states; unstated (e.g. working pressure on SS corrugated) stays null"
+  },
+  "items": [
+    {
+      "kind": "hose",
+      "input": {
+        "code": "H01214006",
+        "desc": "Manuli Farmaster R1/1SN 1/4\""
+      },
+      "expected_item": {
+        "code": "H01214006",
+        "name": "Manuli Farmaster R1/1SN 1/4\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "Rubber",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Manuli",
+          "option"
+        ],
+        [
+          "series",
+          "Farmaster",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "R1/1SN",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "1-wire braid",
+          "option"
+        ],
+        [
+          "bore",
+          4,
+          "number"
+        ],
+        [
+          "working_pressure",
+          225,
+          "number"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "hose",
+      "input": {
+        "code": "H01215012",
+        "desc": "Manuli Farmaster R2/2SN 1/2\""
+      },
+      "expected_item": {
+        "code": "H01215012",
+        "name": "Manuli Farmaster R2/2SN 1/2\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "Rubber",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Manuli",
+          "option"
+        ],
+        [
+          "series",
+          "Farmaster",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "R2/2SN",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "2-wire braid",
+          "option"
+        ],
+        [
+          "bore",
+          8,
+          "number"
+        ],
+        [
+          "working_pressure",
+          275,
+          "number"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "hose",
+      "input": {
+        "code": "H10080012",
+        "desc": "Manuli Rockmaster 4SP 1/2\""
+      },
+      "expected_item": {
+        "code": "H10080012",
+        "name": "Manuli Rockmaster 4SP 1/2\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "Rubber",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Manuli",
+          "option"
+        ],
+        [
+          "series",
+          "Rockmaster",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "4SP",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "4-spiral",
+          "option"
+        ],
+        [
+          "bore",
+          8,
+          "number"
+        ],
+        [
+          "working_pressure",
+          420,
+          "number"
+        ],
+        [
+          "hose_family",
+          "4SP/4SH",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "hose",
+      "input": {
+        "code": "PH253-04",
+        "desc": "Polyhose Rubber Hydraulic R1AT/1SN 1/4\""
+      },
+      "expected_item": {
+        "code": "PH253-04",
+        "name": "Polyhose Rubber Hydraulic R1AT/1SN 1/4\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "Rubber",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Polyhose",
+          "option"
+        ],
+        [
+          "series",
+          "Rubber Hydraulic",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "R1AT/1SN",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "1-wire braid",
+          "option"
+        ],
+        [
+          "bore",
+          4,
+          "number"
+        ],
+        [
+          "working_pressure",
+          225,
+          "number"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "hose",
+      "input": {
+        "code": null,
+        "desc": "Polyhose SS 304 Corrugated 1W/B 1/2\""
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "Polyhose SS 304 Corrugated 1W/B 1/2\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "SS304",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Polyhose",
+          "option"
+        ],
+        [
+          "series",
+          "SS Corrugated",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "1W/B",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "Corrugated",
+          "option"
+        ],
+        [
+          "bore",
+          8,
+          "number"
+        ],
+        [
+          "hose_family",
+          "INDUSTRIAL",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "hose",
+      "input": {
+        "code": "PH370-16",
+        "desc": "Polyhose PTFE Convoluted 1W/B 1\""
+      },
+      "expected_item": {
+        "code": "PH370-16",
+        "name": "Polyhose PTFE Convoluted 1W/B 1\"",
+        "category": "hose",
+        "base_uom": "metre",
+        "material": "PTFE",
+        "status": "active"
+      },
+      "expected_ends": [],
+      "expected_attributes": [
+        [
+          "brand",
+          "Polyhose",
+          "option"
+        ],
+        [
+          "series",
+          "PTFE Convoluted",
+          "option"
+        ],
+        [
+          "hose_standard",
+          "Convoluted",
+          "option"
+        ],
+        [
+          "hose_construction",
+          "Convoluted",
+          "option"
+        ],
+        [
+          "bore",
+          16,
+          "number"
+        ],
+        [
+          "working_pressure",
+          55,
+          "number"
+        ],
+        [
+          "hose_family",
+          "INDUSTRIAL",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "endfitting",
+      "input": {
+        "code": null,
+        "desc": "Single-pc Female BSP 1/2 x 1/2 Straight"
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "Single-pc Female BSP 1/2 x 1/2 Straight",
+        "category": "fitting",
+        "base_uom": "pc",
+        "material": "MS",
+        "status": "active",
+        "is_manufacturable": 1
+      },
+      "expected_ends": [
+        {
+          "end_seq": 1,
+          "end_kind": "hose",
+          "connection_standard": null,
+          "size_dash": 8,
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "crimps/welds onto the hose"
+        },
+        {
+          "end_seq": 2,
+          "end_kind": "connection",
+          "connection_standard": "bspp",
+          "size_value": "1/2\"",
+          "thread": "G1/2",
+          "gender": "female",
+          "seal_type": null
+        }
+      ],
+      "expected_attributes": [
+        [
+          "fitting_type",
+          "Hose End-Fitting",
+          "option"
+        ],
+        [
+          "fitting_construction",
+          "Single-piece",
+          "option"
+        ],
+        [
+          "bend_angle",
+          "Straight",
+          "option"
+        ],
+        [
+          "termination_method",
+          "Crimp",
+          "option"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "endfitting",
+      "input": {
+        "code": null,
+        "desc": "1+1+1 Female DKO 1/2-[M22x1.5]-L15 90deg"
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "1+1+1 Female DKO 1/2-[M22x1.5]-L15 90deg",
+        "category": "fitting",
+        "base_uom": "pc",
+        "material": "MS",
+        "status": "active",
+        "is_manufacturable": 1
+      },
+      "expected_ends": [
+        {
+          "end_seq": 1,
+          "end_kind": "hose",
+          "connection_standard": null,
+          "size_dash": 8,
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "crimps/welds onto the hose"
+        },
+        {
+          "end_seq": 2,
+          "end_kind": "connection",
+          "connection_standard": "din_metric_dko",
+          "size_value": "M22x1.5-L15",
+          "thread": "M22x1.5",
+          "gender": "female",
+          "seal_type": "dko"
+        }
+      ],
+      "expected_attributes": [
+        [
+          "fitting_type",
+          "Hose End-Fitting",
+          "option"
+        ],
+        [
+          "fitting_construction",
+          "Three-piece (1+1+1)",
+          "option"
+        ],
+        [
+          "bend_angle",
+          "90",
+          "option"
+        ],
+        [
+          "termination_method",
+          "Crimp",
+          "option"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "endfitting",
+      "input": {
+        "code": null,
+        "desc": "1+1 Male NPT 1/2 x 1/2 Straight"
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "1+1 Male NPT 1/2 x 1/2 Straight",
+        "category": "fitting",
+        "base_uom": "pc",
+        "material": "MS",
+        "status": "active",
+        "is_manufacturable": 1
+      },
+      "expected_ends": [
+        {
+          "end_seq": 1,
+          "end_kind": "hose",
+          "connection_standard": null,
+          "size_dash": 8,
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "crimps/welds onto the hose"
+        },
+        {
+          "end_seq": 2,
+          "end_kind": "connection",
+          "connection_standard": "npt",
+          "size_value": "1/2\"",
+          "thread": "1/2 NPT",
+          "gender": "male",
+          "seal_type": null
+        }
+      ],
+      "expected_attributes": [
+        [
+          "fitting_type",
+          "Hose End-Fitting",
+          "option"
+        ],
+        [
+          "fitting_construction",
+          "Two-piece (1+1)",
+          "option"
+        ],
+        [
+          "bend_angle",
+          "Straight",
+          "option"
+        ],
+        [
+          "termination_method",
+          "Crimp",
+          "option"
+        ],
+        [
+          "hose_family",
+          "R1/R2",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "endfitting",
+      "input": {
+        "code": null,
+        "desc": "Camlock A SS304 1\""
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "Camlock A SS304 1\"",
+        "category": "fitting",
+        "base_uom": "pc",
+        "material": "SS304",
+        "status": "active",
+        "is_manufacturable": 1
+      },
+      "expected_ends": [
+        {
+          "end_seq": 1,
+          "end_kind": "hose",
+          "connection_standard": null,
+          "size_dash": 16,
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "crimps/welds onto the hose"
+        },
+        {
+          "end_seq": 2,
+          "end_kind": "connection",
+          "connection_standard": "camlock",
+          "size_value": "1\"",
+          "thread": null,
+          "gender": null,
+          "seal_type": null
+        }
+      ],
+      "expected_attributes": [
+        [
+          "fitting_type",
+          "Camlock",
+          "option"
+        ],
+        [
+          "fitting_construction",
+          "Single-piece",
+          "option"
+        ],
+        [
+          "bend_angle",
+          "Straight",
+          "option"
+        ],
+        [
+          "termination_method",
+          "Weld (TIG)",
+          "option"
+        ],
+        [
+          "hose_family",
+          "INDUSTRIAL",
+          "option"
+        ]
+      ]
+    },
+    {
+      "kind": "endfitting",
+      "input": {
+        "code": null,
+        "desc": "ASA 150 Flange SS304 1\""
+      },
+      "expected_item": {
+        "code": "(auto)",
+        "name": "ASA 150 Flange SS304 1\"",
+        "category": "fitting",
+        "base_uom": "pc",
+        "material": "SS304",
+        "status": "active",
+        "is_manufacturable": 1
+      },
+      "expected_ends": [
+        {
+          "end_seq": 1,
+          "end_kind": "hose",
+          "connection_standard": null,
+          "size_dash": 16,
+          "thread": null,
+          "gender": null,
+          "seal_type": null,
+          "note": "crimps/welds onto the hose"
+        },
+        {
+          "end_seq": 2,
+          "end_kind": "connection",
+          "connection_standard": "sae_flange",
+          "size_value": "1\" ASA150",
+          "thread": null,
+          "gender": null,
+          "seal_type": null
+        }
+      ],
+      "expected_attributes": [
+        [
+          "fitting_type",
+          "Flange",
+          "option"
+        ],
+        [
+          "fitting_construction",
+          "Single-piece",
+          "option"
+        ],
+        [
+          "bend_angle",
+          "Straight",
+          "option"
+        ],
+        [
+          "termination_method",
+          "Weld (TIG)",
+          "option"
+        ],
+        [
+          "hose_family",
+          "INDUSTRIAL",
+          "option"
+        ]
+      ]
+    }
+  ],
+  "aggregate_assertions": {
+    "item_rows": 11,
+    "hoses": 6,
+    "end_fittings": 5,
+    "item_end_rows": 10,
+    "hose_ends": 5,
+    "connection_ends": 5,
+    "connection_ends_by_standard": {
+      "bspp": 1,
+      "din_metric_dko": 1,
+      "npt": 1,
+      "camlock": 1,
+      "sae_flange": 1
+    },
+    "auto_generated_codes": 6
+  },
+  "negative_assertions": [
+    "Hoses have ZERO item_end rows — raw hose is not terminated (guards against inventing ends).",
+    "Every end-fitting has exactly one hose end + one connection end (never two connection ends, never zero).",
+    "bore is stored as the canonical dash number, so a 1/2\" hose (dash 8) and a 1/2\" fitting hose-end (dash 8) match automatically (R2).",
+    "hose_family carries pressure class: R1/R2=braided, 4SP/4SH=spiral. No pressure_rating field is written on any fitting (R1 rule).",
+    "NPT (the male NPT fitting) is connection_standard='npt', never merged with bspt — the taper-mismatch guard still holds.",
+    "Camlock end -> connection_standard='camlock'; Flange end -> 'sae_flange'; TC -> 'tc_triclamp' — coupler interfaces are typed, not free text.",
+    "Codes present in the source (H01214006, PH370-16) are kept verbatim; the un-coded rows get a generated, editable code."
+  ]
+}
